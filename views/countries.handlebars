@@ -1,0 +1,19 @@
+<h3>This will show the current table of countries</h3>
+<table>
+    <caption>List of Current Countries</caption>
+    <tr>
+        <th>Name</th>
+        <th>Continent</th>
+        <th>Population</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.continent}}</td>
+        <td>{{this.population}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
+
