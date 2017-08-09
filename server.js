@@ -38,36 +38,24 @@ app.use(express.static("public"));
 
 /* get handler route for home page that renders our current server table */
 app.get('/', function (req, res, next) {
-    /* create our tableContent object */
-    //var tableContent = {};
-    /* pools an available connection, runs the query and returns connection */
-    //mysql.pool.query('SELECT * FROM country', function (err, rows, fields) {
-        /* callback function first reports error if one occurs from query to select */
-        /*if (err) {
-            next(err);
-            return;
-        }*/
-        /* create an array for each row object */
-        //var rowElements = [];
-        /* for each row from our server table */
-        //for (var row in rows) {
-            /* create a new row object with values */
-            /*var rowValues = {
-                'name': rows[row].name,
-                'continent': rows[row].continent,
-                'population': rows[row].population
-            };*/
-            /* push each row object into our array */
-           // rowElements.push(rowValues);
-        //}
-        /* set the array of row objects to the result of our query for table content */
-        //tableContent.results = rowElements;
-        /* render the home.handlebars file with the created table context */
-        //res.render('home', tableContent);
 	res.render('home');
-   // })
 });
 
+app.get('/countries', function (req, res, next) {
+        res.render('countries');
+});
+
+app.get('/movies', function (req, res, next) {
+	res.render('movies');
+});
+
+app.get('/directors', function (req, res, next) {
+	res.render('directors');
+});
+
+app.get('/actors', function (req, res, next) {
+	res.render('actors');
+});
 
 /* use mounts middleware at a specified path, 1st catch all handler
    mounting means we're putting something on that path so when its requested 
