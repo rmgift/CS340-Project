@@ -15,7 +15,7 @@ Phase 1 - Creating Tables and Adding/Removing To Single Tables:
 
 Create Tables in app.get('/reset_tables').      Working_On:     Last_Changed:   Status: Completed
 
-Build Forms for Individual Tables.      Working_On:     Last_Changed:   Status: Not Started
+Build Forms for Individual Tables.      Working_On:     Last_Changed:   Status: In progress
 
 Add Data to Tables (POST).      Working_On:     Last_Changed:   Status: Not Started
 
