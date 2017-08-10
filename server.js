@@ -11,13 +11,13 @@ var express = require('express');
 /* call our new express function that returns an express instance/application */
 var app = express();
 
-/* imports express-handlebars, creates an instance of it letting it know the 
+/* imports express-handlebars, creates an instance of it letting it know the
    default layout will be called main then assigns it to handlebars variable */
 var handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
-/* sets the handlebar.engine to be the thing that handles all file extensions 
+/* sets the handlebar.engine to be the thing that handles all file extensions
    with a .handlebars extension */
 app.engine('handlebars', handlebars.engine);
-/* setting the app view engine to handlebars lets us omit the file extension 
+/* setting the app view engine to handlebars lets us omit the file extension
    when we make calls later in this app */
 app.set('view engine', 'handlebars');
 
@@ -57,8 +57,107 @@ app.get('/actors', function (req, res, next) {
 	res.render('actors');
 });
 
+app.get('/reset-table',function(req,res,next){
+  var context = {};
+  var dropMC = "DROP TABLE IF EXISTS `movies_countries`";
+  var dropAM = "DROP TABLE IF EXISTS `actors_movies`";
+  var dropDM = "DROP TABLE IF EXISTS `directors_movies`";
+  var dropA = "DROP TABLE IF EXISTS `actors`";
+  var dropD = "DROP TABLE IF EXISTS `directors`";
+  var dropM = "DROP TABLE IF EXISTS `movies`";
+  var dropC = "DROP TABLE IF EXISTS `country`";
+  mysql.pool.query(dropMC, function(err){
+	  mysql.pool.query(dropAM, function(err){
+		  mysql.pool.query(dropDM, function(err){
+			  mysql.pool.query(dropA, function(err){
+				  mysql.pool.query(dropD, function(err){
+					  mysql.pool.query(dropM, function(err){
+						  mysql.pool.query(dropC, function(err){
+							  var country = "CREATE TABLE `country` (" +
+							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
+							  	"`name` varchar(255) NOT NULL," +
+							  	"`continent` varchar(255) NOT NULL," +
+							  	"`population` decimal(7,1) NOT NULL," +
+							  	"PRIMARY KEY (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var movies = "CREATE TABLE `movies` (" +
+							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
+							  	"`title` varchar(255) NOT NULL," +
+							  	"`genre` varchar(255) NOT NULL," +
+							  	"`runtime` int(11) NOT NULL," +
+							  	"`release_date` date," +
+							  	"PRIMARY KEY (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var directors = "CREATE TABLE `directors` (" +
+							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
+							  	"`first_name` varchar(255) NOT NULL," +
+							  	"`last_name` varchar(255) NOT NULL," +
+							  	"`age` int(11) NOT NULL," +
+							  	"`cid` int(11) NOT NULL," +
+							  	"PRIMARY KEY (`id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var actors = "CREATE TABLE `actors` (" +
+							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
+							  	"`first_name` varchar(255) NOT NULL," +
+							  	"`last_name` varchar(255) NOT NULL," +
+							  	"`age` int(11) NOT NULL," +
+							  	"`cid` int(11) NOT NULL," +
+							  	"PRIMARY KEY (`id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var dM = "CREATE TABLE `directors_movies` (" +
+							  	"`direct_id` int(11) NOT NULL DEFAULT '0'," +
+							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
+							  	"PRIMARY KEY (`direct_id`,`movie_id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`direct_id`) REFERENCES `directors` (`id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var aM = "CREATE TABLE `actors_movies` (" +
+							  	"`act_id` int(11) NOT NULL DEFAULT '0'," +
+							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
+							  	"PRIMARY KEY (`act_id`,`movie_id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`act_id`) REFERENCES `actors` (`id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)" +
+							  	") ENGINE=InnoDB";
+							  var mC = "CREATE TABLE `movies_countries` (" +
+							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
+							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
+							  	"PRIMARY KEY (`movie_id`,`cid`)," +
+							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)," +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	") ENGINE=InnoDB";
+								mysql.pool.query(country, function(err){
+									mysql.pool.query(movies, function(err){
+										mysql.pool.query(directors, function(err){
+											mysql.pool.query(actors, function(err){
+												mysql.pool.query(dM, function(err){
+													mysql.pool.query(aM, function(err){
+														mysql.pool.query(mC, function(err){
+						  									context.results = "Table reset";
+						  									res.render('home',context);
+												  		});
+											  		});
+										  		});
+									  		});
+								  		});
+							  		});
+						  		});
+						  });
+					  });
+				  });
+			  });
+		  });
+	  });
+  });
+});
+
+
+
+
+
 /* use mounts middleware at a specified path, 1st catch all handler
-   mounting means we're putting something on that path so when its requested 
+   mounting means we're putting something on that path so when its requested
    the thing mounted can be used */
 app.use(function (req, res) {
     res.status(404);
@@ -74,7 +173,9 @@ app.use(function (err, req, res, next) {
     res.render("500");
 });
 
-/* use app's get method to retrieve port value and pass that in as the first 
+
+
+/* use app's get method to retrieve port value and pass that in as the first
    argument the 2nd argument is a callback to call when the server is started,
    this prints message and port numbe */
 app.listen(app.get('port'), function () {
