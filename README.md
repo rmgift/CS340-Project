@@ -13,7 +13,7 @@ To-Do List:
 Phase 1 - Creating Tables and Adding/Removing To Single Tables:
 
 
-Create Tables in app.get('/reset_tables').      Working_On: ZA    Last_Changed:   Status: Not Started
+Create Tables in app.get('/reset_tables').      Working_On:     Last_Changed:   Status: Completed
 
 Build Forms for Individual Tables.      Working_On:     Last_Changed:   Status: Not Started
 
