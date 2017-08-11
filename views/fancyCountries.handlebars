@@ -1,0 +1,22 @@
+<h3>Countries and the Movies</h3>
+<table>
+    <caption>Number of Actor/Directors From and Movies Made in Countries</caption>
+    <tr>
+        <th>Country</th>
+        <th>Population</th>
+        <th>Movies Made In</th>
+        <th>Directors From</th>
+        <th>Actors From</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.population}}</td>
+        <td>{{this.movieCount}}</td>
+        <td>{{this.directorCount}}</td>
+        <td>{{this.actorCount}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>

@@ -107,6 +107,27 @@ app.get('/collaborations', function (req, res, next) {
 	});
 });
 
+app.get('/countries_and_the_movies', function (req, res, next) {
+	var context = {};
+	var selectString = "SELECT c.name, c.population, COALESCE(mov.mov_count, 0) AS `movieCount`, " +
+	"COALESCE(dir.dir_count, 0) AS `directorCount`, COALESCE(act.act_count, 0)  AS `actorCount` FROM country c LEFT JOIN " +
+	"(SELECT c.id AS `mov_country`, COUNT(mc.cid) AS `mov_count` FROM country c " +
+	"INNER JOIN movies_countries mc ON mc.cid = c.id GROUP BY c.id) AS mov ON " +
+	"mov.mov_country = c.id LEFT JOIN (SELECT c.id AS `dir_country`, COUNT(d.id) " +
+	"AS `dir_count` FROM country c INNER JOIN directors d ON c.id = d.cid GROUP BY c.id) " +
+	"AS dir ON dir.dir_country = c.id LEFT JOIN (SELECT c.id AS `act_country`, " +
+	"COUNT(a.id) AS `act_count` FROM country c INNER JOIN actors a ON c.id = a.cid " +
+	"GROUP BY c.id) AS act ON act.act_country = c.id ORDER BY c.name ASC";
+	mysql.pool.query(selectString, function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('fancyCountries', context);
+	});
+});
+
 app.post('/insert_country',function(req,res,next){
   mysql.pool.query("INSERT INTO country (`name`, `continent`, `population`) VALUES (?, ?, ?)",
     [req.body.name || null, req.body.continent || null, req.body.population || null], function(err, result){
