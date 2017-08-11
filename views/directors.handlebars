@@ -2,11 +2,11 @@
 <table>
     <caption>List of Directors</caption>
     <tr>
-        <th>Id</th>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Age</th>
-        <th>cid</th>
+        <th>Country</th>
     </tr>
     {{#if results}}
     {{#each results}}
@@ -15,7 +15,7 @@
         <td>{{this.first_name}}</td>
         <td>{{this.last_name}}</td>
         <td>{{this.age}}</td>
-        <td>{{this.cid}}</td>
+        <td>{{this.name}}</td>
     </tr>
     {{/each}}
     {{/if}}
