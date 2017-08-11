@@ -149,6 +149,42 @@ app.post('/insert_actor',function(req,res,next){
   });
 });
 
+app.get('/directorsOfMovies', function (req, res, next) {
+	var context = {};
+	mysql.pool.query("SELECT * FROM `directors_movies`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('directorsOfMovies', context);
+	});
+});
+
+app.get('/actorsInMovies', function (req, res, next) {
+	var context = {};
+	mysql.pool.query("SELECT * FROM `actors_movies`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('actorsInMovies', context);
+	});
+});
+
+app.get('/moviesInCountries', function (req, res, next) {
+	var context = {};
+	mysql.pool.query("SELECT * FROM `movies_countries`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('moviesInCountries', context);
+	});
+});
+
 app.get('/reset-table',function(req,res,next){
   var context = {};
   var dropMC = "DROP TABLE IF EXISTS `movies_countries`";
