@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 9798);
+app.set('port', 9798); 
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -42,19 +42,111 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/countries', function (req, res, next) {
-        res.render('countries');
+	var context = {};
+	mysql.pool.query("SELECT * FROM `country`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('countries', context);
+	});
 });
 
 app.get('/movies', function (req, res, next) {
-	res.render('movies');
+	var context = {};
+	mysql.pool.query("SELECT * FROM `movies`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('movies', context);
+	});
 });
 
 app.get('/directors', function (req, res, next) {
-	res.render('directors');
+	var context = {};
+	mysql.pool.query("SELECT * FROM `directors`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('directors', context);
+	});
 });
 
 app.get('/actors', function (req, res, next) {
-	res.render('actors');
+	var context = {};
+	mysql.pool.query("SELECT * FROM `actors`", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('actors', context);
+	});
+});
+
+app.post('/insert_country',function(req,res,next){
+  mysql.pool.query("INSERT INTO country (`name`, `continent`, `population`) VALUES (?, ?, ?)",
+    [req.body.name || null, req.body.continent || null, req.body.population || null], function(err, result){
+    if(err){
+      next(err);
+      return;
+  	}
+    res.send(result.insertId.toString());
+  });
+});
+
+app.post('/insert_movie',function(req,res,next){
+  mysql.pool.query("INSERT INTO movies (`title`, `genre`, `runtime`, `release_date`) VALUES (?, ?, ?, ?)",
+    [req.body.title || null, req.body.genre || null, req.body.runtime || null, req.body.release_date || null], function(err, result){
+    if(err){
+      next(err);
+      return;
+  	}
+    res.send(result.insertId.toString());
+  });
+});
+
+app.post('/insert_director',function(req,res,next){
+  mysql.pool.query("SELECT id FROM `country` WHERE name=?", [req.body.country], function(err, rows, fields){
+  	if(err){
+    	next(err);
+    	return;
+  	}
+		var id = rows[0].id;
+		console.log(id);
+		mysql.pool.query("INSERT INTO directors (`first_name`, `last_name`, `age`, `cid`) VALUES (?, ?, ?, ?)",
+	    [req.body.fname || null, req.body.lname || null, req.body.age || null, id || null], function(err, result){
+	    if(err){
+	      next(err);
+	      return;
+	  	}
+	    res.send(result.insertId.toString());
+	  });
+  });
+});
+
+app.post('/insert_actor',function(req,res,next){
+  mysql.pool.query("SELECT id FROM `country` WHERE name=?", [req.body.country], function(err, rows, fields){
+  	if(err){
+    	next(err);
+    	return;
+  	}
+		var id = rows[0].id;
+		console.log(id);
+		mysql.pool.query("INSERT INTO actors (`first_name`, `last_name`, `age`, `cid`) VALUES (?, ?, ?, ?)",
+	    [req.body.fname || null, req.body.lname || null, req.body.age || null, id || null], function(err, result){
+	    if(err){
+	      next(err);
+	      return;
+	  	}
+	    res.send(result.insertId.toString());
+	  });
+  });
 });
 
 app.get('/reset-table',function(req,res,next){
@@ -73,6 +165,7 @@ app.get('/reset-table',function(req,res,next){
 				  mysql.pool.query(dropD, function(err){
 					  mysql.pool.query(dropM, function(err){
 						  mysql.pool.query(dropC, function(err){
+							  console.log("country dropped");
 							  var country = "CREATE TABLE `country` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`name` varchar(255) NOT NULL," +
