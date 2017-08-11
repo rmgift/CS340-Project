@@ -67,7 +67,7 @@ app.get('/movies', function (req, res, next) {
 
 app.get('/directors', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT * FROM `directors`", function(err, rows, fields){
+	mysql.pool.query("SELECT d.id, d.first_name, d.last_name, d.age, c.name FROM `directors` d INNER JOIN `country` c ON c.id = d.cid", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -79,7 +79,7 @@ app.get('/directors', function (req, res, next) {
 
 app.get('/actors', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT * FROM `actors`", function(err, rows, fields){
+	mysql.pool.query("SELECT a.id, a.first_name, a.last_name, a.age, c.name FROM `actors` a INNER JOIN `country` c ON c.id = a.cid", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
