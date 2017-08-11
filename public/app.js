@@ -85,7 +85,7 @@ document.getElementById('postNewDirector').addEventListener('click', function (e
 document.getElementById('postNewActor').addEventListener('click', function (event) {
     var req = new XMLHttpRequest();
     var payload = {};
-    var newDirector = document.getElementById("newActor");
+    var newActor = document.getElementById("newActor");
     payload.fname = newActor.first_name.value;
     payload.lname = newActor.last_name.value;
     payload.age = newActor.age.value;

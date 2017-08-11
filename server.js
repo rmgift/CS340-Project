@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 9798); 
+app.set('port', 3000); //9798
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -86,6 +86,24 @@ app.get('/actors', function (req, res, next) {
 		}
 		context.results = rows;
 		res.render('actors', context);
+	});
+});
+
+app.get('/collaborations', function (req, res, next) {
+	var context = {};
+	var selectString = "SELECT d.first_name AS `dfn`, d.last_name AS `dln`," +
+		"a.first_name AS `afn`, a.last_name AS `aln`, COUNT(m.id) AS `amount` FROM " +
+		"`directors` d INNER JOIN `directors_movies` dm ON d.id = dm.direct_id INNER" +
+		" JOIN `movies` m ON m.id = dm.movie_id INNER JOIN `actors_movies` am ON " +
+		"am.movie_id = m.id INNER JOIN `actors` a ON a.id = am.act_id GROUP BY " +
+		"d.first_name, d.last_name, a.first_name, a.last_name";
+	mysql.pool.query(selectString, function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('collaborations', context);
 	});
 });
 

@@ -1,0 +1,22 @@
+<h3>Director - Actor Collaborations</h3>
+<table>
+    <caption>Number of Times Directors and Actors Have Worked Together</caption>
+    <tr>
+        <th>Director First Name</th>
+        <th>Director Last Name</th>
+        <th>Actor First Name</th>
+        <th>Actor Last Name</th>
+        <th>Collaborations</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.dfn}}</td>
+        <td>{{this.dln}}</td>
+        <td>{{this.afn}}</td>
+        <td>{{this.aln}}</td>
+        <td>{{this.amount}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
