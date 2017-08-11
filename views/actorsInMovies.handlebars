@@ -1,0 +1,16 @@
+<h3>This tables shows the movies an Actor had a role in</h3>
+<table>
+    <caption>Actors In Movies</caption>
+    <tr>
+        <th>Actors ID</th>
+        <th>Movie ID</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.act_id}}</td>
+        <td>{{this.movie_id}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>

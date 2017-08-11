@@ -1,0 +1,16 @@
+<h3>Movies in Countries</h3>
+<table>
+    <caption>List of Movies in Countries</caption>
+    <tr>
+        <th>Movie ID</th>
+        <th>Country ID</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.movie_id}}</td>
+        <td>{{this.cid}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>

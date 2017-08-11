@@ -1,0 +1,16 @@
+<h3> This table shows which movies a Director has Made</h3>
+<table>
+    <caption>List of Directors of Movies</caption>
+    <tr>
+        <th>Director ID</th>
+        <th>Movie ID</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.direct_id}}</td>
+        <td>{{this.movie_id}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
