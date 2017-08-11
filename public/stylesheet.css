@@ -41,5 +41,22 @@
 }
 
 h2 {
-   padding-top: 50px;
+   padding-top: 25px;
+}
+
+table {
+   border-collapse: collapse;
+   width: auto;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+
+td {
+   padding: 5px;
+}
+
+th {
+   padding: 10px;
 }
