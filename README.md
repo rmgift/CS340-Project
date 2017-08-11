@@ -21,7 +21,7 @@ Add Data to Tables (POST).      Working_On:     Last_Changed:   Status: In Progr
 
 Remove Data from Tables (POST).      Working_On:     Last_Changed:   Status: Not Started
 
-View Individual Tables (GET).      Working_On:     Last_Changed:   Status: Not Started
+View Individual Tables (GET).      Working_On:     Last_Changed:   Status: Completed
 
 
 Phase 2 - View Individual Tables and Add Filters:
