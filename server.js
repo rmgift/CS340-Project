@@ -151,7 +151,7 @@ app.post('/insert_actor',function(req,res,next){
 
 app.get('/directorsOfMovies', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT * FROM `directors_movies`", function(err, rows, fields){
+	mysql.pool.query("SELECT directors.first_name, directors.last_name, movies.title FROM `directors` INNER JOIN `directors_movies` ON directors_movies.direct_id = directors.id INNER JOIN `movies` ON movies.id = directors_movies.movie_id", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -163,7 +163,7 @@ app.get('/directorsOfMovies', function (req, res, next) {
 
 app.get('/actorsInMovies', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT * FROM `actors_movies`", function(err, rows, fields){
+	mysql.pool.query("SELECT actors.first_name, actors.last_name, movies.title FROM `actors` INNER JOIN `actors_movies` ON actors_movies.act_id = actors.id INNER JOIN `movies` ON movies.id = actors_movies.movie_id", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -175,7 +175,7 @@ app.get('/actorsInMovies', function (req, res, next) {
 
 app.get('/moviesInCountries', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT * FROM `movies_countries`", function(err, rows, fields){
+	mysql.pool.query("SELECT movies.title, country.name FROM `movies` INNER JOIN `movies_countries` ON movies_countries.movie_id = movies.id INNER JOIN `country` ON country.id = movies_countries.cid", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
