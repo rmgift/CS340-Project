@@ -1,4 +1,4 @@
-﻿<h2>Input A New Country:</h2>
+<h2>Input A New Country:</h2>
 <form id="newCountry">
     <div>
         <label class="inputLabel">Name:</label>
@@ -8,13 +8,13 @@
     <div>
         <label class="inputLabel">Continent:</label>
         <select class="userInput" name="continent" id="continent">
-            <option value="0">North America</option>
-            <option value="1">South America</option>
-			<option value="2">Europe</option>
-            <option value="3">Asia</option>
-			<option value="4">Africa</option>
-			<option value="5">Oceania</option>
-            <option value="6">Antartica</option>
+            <option value="North America">North America</option>
+            <option value="South America">South America</option>
+			<option value="Europe">Europe</option>
+            <option value="Asia">Asia</option>
+			<option value="Africa">Africa</option>
+			<option value="Oceania">Oceania</option>
+            <option value="Antartica">Antartica</option>
         </select>
     </div>
     <br />
@@ -74,7 +74,11 @@
 		<input class="userInput" type="number" name="age" id="age">
     </div>
     <br />
-	<!-- need to include country selection -->
+    <div>
+       <label class="inputLabel">Country:</label>
+       <input class="userInput" type="text" name="country_director" id="country_director">
+    </div>
+    <br />
     <div>
         <input type="submit" name="AddDirector" value="AddDirector" id="postNewDirector">
     </div>
@@ -98,9 +102,13 @@
 		<input class="userInput" type="number" name="age" id="age">
     </div>
     <br />
-	<!-- need to include country selection -->
     <div>
-        <input type="submit" name="AddDirector" value="AddDirector" id="postNewDirector">
+       <label class="inputLabel">Country:</label>
+       <input class="userInput" type="text" name="country_actor" id="country_actor">
+    </div>
+    <br />
+    <div>
+        <input type="submit" name="AddActor" value="AddActor" id="postNewActor">
     </div>
 </form>
 <br />
