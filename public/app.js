@@ -29,6 +29,7 @@ document.getElementById('postNewCountry').addEventListener('click', function (ev
     event.preventDefault();
 });
 
+// posts a new movie to the movies table
 document.getElementById('postNewMovie').addEventListener('click', function (event) {
     var req = new XMLHttpRequest();
     var payload = {};
@@ -55,6 +56,7 @@ document.getElementById('postNewMovie').addEventListener('click', function (even
     event.preventDefault();
 });
 
+// posts a new director to the directors table
 document.getElementById('postNewDirector').addEventListener('click', function (event) {
     var req = new XMLHttpRequest();
     var payload = {};
@@ -82,6 +84,7 @@ document.getElementById('postNewDirector').addEventListener('click', function (e
     event.preventDefault();
 });
 
+// posts a new actor to the actors table
 document.getElementById('postNewActor').addEventListener('click', function (event) {
     var req = new XMLHttpRequest();
     var payload = {};
@@ -106,4 +109,81 @@ document.getElementById('postNewActor').addEventListener('click', function (even
     console.log(payload);
     req.send(JSON.stringify(payload));
     event.preventDefault();
+});
+
+// posts a new relationship of movies filmed in a country
+document.getElementById('postNewMinC').addEventListener('click', function (event) {
+	var req = new XMLHttpRequest();
+	var payload = {};
+	var mINc = document.getElementById("newMinC");
+	payload.title = mINc.movie_title.value;
+	payload.country = mINc.movie_country.value;
+
+	req.open("POST", "/insertMinC", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.addEventListener('load', function() {
+		if (req.status >= 200 && req.status < 400) {
+			if (req.responseText) {
+				console.log(req.responseText);
+			}
+		}
+		else {
+			console.log("Error in network request: " + req.statusText);
+		}
+	});
+	console.log(payload);
+	req.send(JSON.stringify(payload));
+	event.preventDefault();
+});
+
+// posts a new relationship of director of a movie
+document.getElementById('postNewDofM').addEventListener('click', function (event) {
+	var req = new XMLHttpRequest();
+	var payload = {};
+	var dOFm = document.getElementById("newDofM");
+	payload.first_name = dOFm.d_fname.value;
+	payload.last_name = dOFm.d_lname.value;
+	payload.title = dOFm.d_movie_title.value;
+
+	req.open("POST", "/insertDofM", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.addEventListener('load', function() {
+		if (req.status >= 200 && req.status < 400) {
+			if (req.responseText) {
+				console.log(req.responseText);
+			}
+		}
+		else {
+			console.log("Error in network request: " + req.statusText);
+		}
+	});
+	console.log(payload);
+	req.send(JSON.stringify(payload));
+	event.preventDefault();
+});
+
+// posts a new relationship of actor in a movie
+document.getElementById('postNewAinM').addEventListener('click', function (event) {
+	var req = new XMLHttpRequest();
+	var payload = {};
+	var aINm = document.getElementById("newAinM");
+	payload.first_name = aINm.a_fname.value;
+	payload.last_name = aINm.a_lname.value;
+	payload.title = aINm.a_movie_title.value;
+
+	req.open("POST", "/insertAinM", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.addEventListener('load', function() {
+		if (req.status >= 200 && req.status < 400) {
+			if (req.responseText) {
+				console.log(req.responseText);
+			}
+		}
+		else {
+			console.log("Error in network request: " + req.statusText);
+		}
+	});
+	console.log(payload);
+	req.send(JSON.stringify(payload));
+	event.preventDefault();
 });
