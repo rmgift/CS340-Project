@@ -5,24 +5,105 @@
 
 // create an event listener to look for clicks on the button to submit the form
 document.getElementById('postNewCountry').addEventListener('click', function (event) {
-    /* get the form ID so we can capture the data upon clicking the submit button */
-    var newCountry = document.getElementById("newCountry");
-    /* XMLHttpRequest is an object that can make an HTTP request and 
-       return the data it gets from that request */
     var req = new XMLHttpRequest();
-    /* setup our URL from the submission so we can send the get request */
-    var siteURL = "country=" + newCountry.elements.country.value +
-        "&continent=" + newCountry.elements.continent.value +
-        "&population=" + newCountry.elements.population.value;
-    /* open a get request, setup to send via the server.js and the app.get('/insert') route 
-       this route, '/insert' is mapped to send a query to the server to insert the new
-       exercise into the table */
-    req.open("GET", "/insert?" + siteURL, true);
-    /* set the request header to let the server know the type of data we're sending */
-    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    var payload = {};
+    var newCountry = document.getElementById("newCountry");
+    payload.name = newCountry.name.value;
+    payload.continent = newCountry.continent.value;
+    payload.population = newCountry.population.value;
 
-    /* send our request and response will print once its received */
-    req.send("/insert?" + siteURL);
-    /* prevent the default from beginning */
+    req.open("POST", "/insert_country", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if(req.status >= 200 && req.status < 400) {
+            if(req.responseText) {
+                console.log(req.responseText);
+             }
+           }
+           else {
+               console.log("Error in network request: " + req.statusText);
+           }
+    });
+    console.log(payload);
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+});
+
+document.getElementById('postNewMovie').addEventListener('click', function (event) {
+    var req = new XMLHttpRequest();
+    var payload = {};
+    var newMovie = document.getElementById("newMovie");
+    payload.title = newMovie.title.value;
+    payload.genre = newMovie.genre.value;
+    payload.runtime = newMovie.runtime.value;
+    payload.release_date = newMovie.release_date.value;
+
+    req.open("POST", "/insert_movie", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if(req.status >= 200 && req.status < 400) {
+            if(req.responseText) {
+                console.log(req.responseText);
+             }
+           }
+           else {
+               console.log("Error in network request: " + req.statusText);
+           }
+    });
+    console.log(payload);
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+});
+
+document.getElementById('postNewDirector').addEventListener('click', function (event) {
+    var req = new XMLHttpRequest();
+    var payload = {};
+    var newDirector = document.getElementById("newDirector");
+    payload.fname = newDirector.first_name.value;
+    payload.lname = newDirector.last_name.value;
+    payload.age = newDirector.age.value;
+    payload.country = newDirector.country_director.value;
+
+
+    req.open("POST", "/insert_director", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if(req.status >= 200 && req.status < 400) {
+            if(req.responseText) {
+                console.log(req.responseText);
+             }
+           }
+           else {
+               console.log("Error in network request: " + req.statusText);
+           }
+    });
+    console.log(payload);
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+});
+
+document.getElementById('postNewActor').addEventListener('click', function (event) {
+    var req = new XMLHttpRequest();
+    var payload = {};
+    var newDirector = document.getElementById("newActor");
+    payload.fname = newActor.first_name.value;
+    payload.lname = newActor.last_name.value;
+    payload.age = newActor.age.value;
+    payload.country = newActor.country_actor.value;
+
+    req.open("POST", "/insert_actor", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if(req.status >= 200 && req.status < 400) {
+            if(req.responseText) {
+                console.log(req.responseText);
+             }
+           }
+           else {
+               console.log("Error in network request: " + req.statusText);
+           }
+    });
+    console.log(payload);
+    req.send(JSON.stringify(payload));
     event.preventDefault();
 });
