@@ -1,1 +1,22 @@
-<h3>This will show the current table of actors</h3>
+<h3>This will show the current table of movies</h3>
+<table>
+    <caption>List of Movies</caption>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Runtime</th>
+        <th>Release Date</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.genre}}</td>
+        <td>{{this.runtime}}</td>
+        <td>{{this.release_date}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
