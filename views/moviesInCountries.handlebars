@@ -2,14 +2,14 @@
 <table>
     <caption>List of Movies in Countries</caption>
     <tr>
-        <th>Movie ID</th>
-        <th>Country ID</th>
+        <th>Movie Title</th>
+        <th>Country</th>
     </tr>
     {{#if results}}
     {{#each results}}
     <tr>
-        <td>{{this.movie_id}}</td>
-        <td>{{this.cid}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.name}}</td>
     </tr>
     {{/each}}
     {{/if}}

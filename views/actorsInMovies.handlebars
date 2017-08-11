@@ -2,14 +2,16 @@
 <table>
     <caption>Actors In Movies</caption>
     <tr>
-        <th>Actors ID</th>
-        <th>Movie ID</th>
+        <th>Actors First Name</th>
+	<th>Actors Last Name</th>
+        <th>Movie Title</th>
     </tr>
     {{#if results}}
     {{#each results}}
     <tr>
-        <td>{{this.act_id}}</td>
-        <td>{{this.movie_id}}</td>
+        <td>{{this.first_name}}</td>
+        <td>{{this.last_name}}</td>
+	<td>{{this.title}}</td>
     </tr>
     {{/each}}
     {{/if}}

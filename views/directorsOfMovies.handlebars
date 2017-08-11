@@ -2,14 +2,16 @@
 <table>
     <caption>List of Directors of Movies</caption>
     <tr>
-        <th>Director ID</th>
-        <th>Movie ID</th>
+        <th>Director First Name</th>
+	<th>Director Last Name</th>
+        <th>Movie Title</th>
     </tr>
     {{#if results}}
     {{#each results}}
     <tr>
-        <td>{{this.direct_id}}</td>
-        <td>{{this.movie_id}}</td>
+        <td>{{this.first_name}}</td>
+	<td>{{this.last_name}}</td>
+        <td>{{this.title}}</td>
     </tr>
     {{/each}}
     {{/if}}
