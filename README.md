@@ -28,15 +28,15 @@ Phase 2 - View Individual Tables and Add Filters:
 
 Note: Everything is (GET)
 
-View Table 1 - Number of Actor/Director has Collaborations.       Working_On:     Last_Changed:   Status: Not Started
+View Table 1 - Number of Actor/Director has Collaborations.       Working_On:     Last_Changed:   Status: Completed
 
-View Table 2 - Number of Actors, Directors, Locations per Country.       Working_On:     Last_Changed:   Status: Not Started
+View Table 2 - Number of Actors, Directors, Locations per Country.       Working_On:     Last_Changed:   Status: Completed
 
 View Table 3 - Movie has Actors.      Working_On:     Last_Changed:   Status: Not Started
 
 View Table 4 - Movie has Directors.      Working_On:     Last_Changed:   Status: Not Started
 
-Table 1 Filters.       Working_On:     Last_Changed:   Status: Not Started
+Table 1 Filters.       Working_On:     Last_Changed:   Status: Completed
 
 Table 2 Filters.       Working_On:     Last_Changed:   Status: Not Started
 
