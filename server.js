@@ -138,9 +138,13 @@ app.get('/collaborations', function (req, res, next) {
 
 	}
 	selectString = selectString + " GROUP BY d.first_name, d.last_name, a.first_name, a.last_name";
-	if(req.query['amount'] != '') {
-		selectString = selectString + " HAVING amount = ?";
-		properties.push(parseInt(req.query['amount']));
+	if(Object.keys(req.query).length > 0) {
+		for(var property in req.query) {
+			if(req.query.hasOwnProperty(property) && property == 'amount' && req.query[property] != '') {
+				selectString = selectString + " HAVING amount = ?";
+				properties.push(parseInt(req.query['amount']));
+			}
+		}
 	}
 	console.log(properties);
 
