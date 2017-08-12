@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 3000); //9798
+app.set('port', 9798); //9798
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -39,6 +39,18 @@ app.use(express.static("public"));
 /* get handler route for home page that renders our current server table */
 app.get('/', function (req, res, next) {
 	res.render('home');
+});
+
+app.get('/addToTables', function (req, res, next) {
+	res.render('addToTables');
+});
+
+app.get('/removeFromTables', function (req, res, next) {
+	res.render('removeFromTables');
+});
+
+app.get('/updateTables', function (req, res, next) {
+	res.render('updateTables');
 });
 
 // handler routes to the page that displays the current countries table information
