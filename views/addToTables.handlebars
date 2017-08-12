@@ -1,0 +1,174 @@
+<br />
+<h2>Input A New Country:</h2>
+<form id="newCountry">
+    	<div>
+        	<label class="inputLabel">Name:</label>
+        	<input class="userInput" type="text" name="name" id="name">
+    	</div>
+    	<br />
+    	<div>
+        	<label class="inputLabel">Continent:</label>
+        	<select class="userInput" name="continent" id="continent">
+			<option value="North America">North America</option>
+			<option value="South America">South America</option>
+			<option value="Europe">Europe</option>
+			<option value="Asia">Asia</option>
+			<option value="Africa">Africa</option>
+			<option value="Oceania">Oceania</option>
+			<option value="Antartica">Antartica</option>
+		</select>
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Population:</label>
+		<input class="userInput" type="number" name="population" id="population">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddCountry" value="AddCountry" id="postNewCountry">
+	</div>
+</form>
+
+<h2>Input A New Movie</h2>
+<form id="newMovie">
+	<div>
+        	<label class="inputLabel">Title:</label>
+        	<input class="userInput" type="text" name="title" id="title">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Genre:</label>
+		<input class="userInput" type="text" name="genre" id="genre">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Runtime:</label>
+		<input class="userInput" type="number" name="runtime" id="runtime">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Release Date (YYYY-MM-DD):</label>
+		<input class="userInput" type="date" name="release_date" id="release_date">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddMovie" value="AddMovie" id="postNewMovie">
+	</div>
+</form>
+
+<h2>Input A New Director</h2>
+<form id="newDirector">
+	<div>
+		<label class="inputLabel">First Name:</label>
+		<input class="userInput" type="text" name="first_name" id="first_name">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Last Name:</label>
+		<input class="userInput" type="text" name="last_name" id="last_name">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Age:</label>
+		<input class="userInput" type="number" name="age" id="age">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Country:</label>
+		<input class="userInput" type="text" name="country_director" id="country_director">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddDirector" value="AddDirector" id="postNewDirector">
+	</div>
+</form>
+
+<h2>Input A New Actor</h2>
+<form id="newActor">
+	<div>
+		<label class="inputLabel">First Name:</label>
+		<input class="userInput" type="text" name="first_name" id="first_name">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Last Name:</label>
+		<input class="userInput" type="text" name="last_name" id="last_name">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Age:</label>
+		<input class="userInput" type="number" name="age" id="age">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Country:</label>
+		<input class="userInput" type="text" name="country_actor" id="country_actor">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddActor" value="AddActor" id="postNewActor">
+	</div>
+</form>
+
+<h2>Input A Movie In a Country</h2>
+<form id="newMinC">
+	<div>
+		<label class="inputLabel">Movie Title:</label>
+		<input class="userInput" type="text" name="movie_title" id="movie_title">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Country:</label>
+		<input class="userInput" type="text" name="movie_country" id="movie_country">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddMovieInCountry" value="AddMovieInCountry" id="postNewMinC">
+	</div>
+</form>
+
+<h2>Input A Director of a Movie</h2>
+<form id="newDofM">
+	<div>
+		<label class="inputLabel">Director First Name:</label>
+		<input class="userInput" type="text" name="d_fname" id="d_fname">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Director Last Name:</label>
+		<input class="userInput" type="text" name="d_lname" id="d_lname">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Movie Title:</label>
+		<input class="userInput" type="text" name="d_movie_title" id="d_movie_title">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddDirectorOfMovie" value="AddDirectorOfMovie" id="postNewDofM">
+	</div>
+</form>
+
+<h2>Input an Actor in a Movie</h2>
+<form id="newAinM">
+	<div>
+		<label class="inputLabel">Actor First Name:</label>
+		<input class="userInput" type="text" name="a_fname" id="a_fname">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Actor Last Name:</label>
+		<input class="userInput" type="text" name="a_lname" id="a_lname">
+	</div>
+	<br />
+	<div>
+		<label class="inputLabel">Movie Title:</label>
+		<input class="userInput" type="text" name="a_movie_title" id="a_movie_title">
+	</div>
+	<br />
+	<div>
+		<input type="submit" name="AddActorInMovie" value="AddActorInMovie" id="postNewAinM">
+	</div>
+</form>
+
+<script src="./app.js"></script>
