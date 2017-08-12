@@ -1,4 +1,29 @@
 <h3>Director - Actor Collaborations</h3>
+<h4>Filters:<h4>
+<form action="/collaborations" method="get">
+  <p>
+    <label for="d.first_name">Director First Name:</label>
+    <input type="text" name="d.first_name" id="d.first_name">
+  </p>
+  <p>
+    <label for="d.last_name">Director Last Name:</label>
+    <input type="text" name="d.last_name" id="d.last_name">
+  </p>
+  <p>
+    <label for="a.first_name">Actor First Name:</label>
+    <input type="text" name="a.first_name" id="a.first_name">
+  </p>
+  <p>
+    <label for="a.last_name">Actor Last Name:</label>
+    <input type="text" name="a.last_name" id="a.last_name">
+  </p>
+  <p>
+    <label for="amount">Number of Collaborations:</label>
+    <input type="number" name="amount" id="amount">
+  </p>
+  <input type="submit" value="Filter Results">
+  <br/>
+</form>
 <table>
     <caption>Number of Times Directors and Actors Have Worked Together</caption>
     <tr>

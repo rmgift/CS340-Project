@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 9798); //9798
+app.set('port', 3000); //9798
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -111,9 +111,40 @@ app.get('/collaborations', function (req, res, next) {
 		"a.first_name AS `afn`, a.last_name AS `aln`, COUNT(m.id) AS `amount` FROM " +
 		"`directors` d INNER JOIN `directors_movies` dm ON d.id = dm.direct_id INNER" +
 		" JOIN `movies` m ON m.id = dm.movie_id INNER JOIN `actors_movies` am ON " +
-		"am.movie_id = m.id INNER JOIN `actors` a ON a.id = am.act_id GROUP BY " +
-		"d.first_name, d.last_name, a.first_name, a.last_name";
-	mysql.pool.query(selectString, function(err, rows, fields){
+		"am.movie_id = m.id INNER JOIN `actors` a ON a.id = am.act_id" ;
+
+
+	//based on answer from https://stackoverflow.com/questions/17385009/can-i-iterate-over-the-query-string-parameters-using-expressjs
+	//and https://stackoverflow.com/questions/35600800/how-to-get-number-of-request-query-parameters-in-express-js
+	var properties = [];
+	var whereString = " WHERE ";
+	if(Object.keys(req.query).length > 0) {
+		for(var property in req.query) {
+			if(req.query.hasOwnProperty(property) && req.query[property] != '' && property != 'amount') {
+				whereString = whereString + " " + property + " = ? AND ";
+				if(!isNaN(parseInt(req.query[property]))) {
+					properties.push(parseInt(req.query[property]));
+				}
+				else {
+					properties.push(req.query[property]);
+				}
+
+			}
+		}
+		if(properties.length > 0) {
+			selectString = selectString + whereString;
+			selectString = selectString.substring(0, selectString.length - 4);
+		}
+
+	}
+	selectString = selectString + " GROUP BY d.first_name, d.last_name, a.first_name, a.last_name";
+	if(req.query['amount'] != '') {
+		selectString = selectString + " HAVING amount = ?";
+		properties.push(parseInt(req.query['amount']));
+	}
+	console.log(properties);
+
+	mysql.pool.query(selectString, properties, function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -304,7 +335,7 @@ app.get('/directorsOfMovies', function (req, res, next) {
 	});
 });
 
-// handler routes to the page that displays the current actors in movies table information 
+// handler routes to the page that displays the current actors in movies table information
 app.get('/actorsInMovies', function (req, res, next) {
 	var context = {};
 	mysql.pool.query("SELECT actors.first_name, actors.last_name, movies.title FROM `actors` INNER JOIN `actors_movies` ON actors_movies.act_id = actors.id INNER JOIN `movies` ON movies.id = actors_movies.movie_id", function(err, rows, fields){
