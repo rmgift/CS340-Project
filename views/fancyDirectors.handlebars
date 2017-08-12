@@ -1,0 +1,28 @@
+<h3>Director Bios and Filmography</h3>
+<table>
+    <caption>Personal Information and Filmography of Directors</caption>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Home Country</th>
+        <th>Movie Title</th>
+        <th>Genre</th>
+        <th>Runtime (min)</th>
+        <th>Release Date</th>
+    </tr>
+    {{#if results}}
+    {{#each results}}
+    <tr>
+        <td>{{this.dfn}}</td>
+        <td>{{this.dln}}</td>
+        <td>{{this.dAge}}</td>
+        <td>{{this.countryName}}</td>
+        <td>{{this.mTitle}}</td>
+        <td>{{this.mGenre}}</td>
+        <td>{{this.mRuntime}}</td>
+        <td>{{this.formattedDate}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>

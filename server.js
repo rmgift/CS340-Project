@@ -146,8 +146,7 @@ app.get('/collaborations', function (req, res, next) {
 			}
 		}
 	}
-	console.log(properties);
-
+	selectString = selectString + " ORDER BY d.last_name ASC, a.last_name ASC"
 	mysql.pool.query(selectString, properties, function(err, rows, fields){
 		if(err){
 			next(err);
@@ -176,6 +175,40 @@ app.get('/countries_and_the_movies', function (req, res, next) {
 		}
 		context.results = rows;
 		res.render('fancyCountries', context);
+	});
+});
+
+app.get('/actor_bio_filmography', function (req, res, next) {
+	var context = {};
+	var selectString = "SELECT a.first_name AS `afn`, a.last_name AS `aln`, a.age AS `aAge`, c.name AS `countryName`, " +
+	"m.title AS `mTitle`, m.genre AS `mGenre`, m.runtime AS `mRuntime`, DATE_FORMAT(m.release_date, '%m/%d/%Y') AS " +
+	"formattedDate FROM `actors` a INNER JOIN `country` c ON a.cid = c.id " +
+	"INNER JOIN `actors_movies` am ON am.act_id = a.id INNER JOIN `movies` m ON m.id = am.movie_id " +
+	"ORDER BY `aln` ASC, m.release_date DESC";
+	mysql.pool.query(selectString, function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('fancyActors', context);
+	});
+});
+
+app.get('/director_bio_filmography', function (req, res, next) {
+	var context = {};
+	var selectString = "SELECT d.first_name AS `dfn`, d.last_name AS `dln`, d.age AS `dAge`, c.name AS `countryName`, " +
+	"m.title AS `mTitle`, m.genre AS `mGenre`, m.runtime AS `mRuntime`, DATE_FORMAT(m.release_date, '%m/%d/%Y') AS " +
+	"formattedDate FROM `directors` d INNER JOIN `country` c ON d.cid = c.id " +
+	"INNER JOIN `directors_movies` dm ON dm.direct_id = d.id INNER JOIN `movies` m ON m.id = dm.movie_id " +
+	"ORDER BY d.last_name ASC, m.release_date DESC";
+	mysql.pool.query(selectString, function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		context.results = rows;
+		res.render('fancyDirectors', context);
 	});
 });
 
