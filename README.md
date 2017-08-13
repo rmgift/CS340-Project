@@ -32,14 +32,14 @@ View Table 1 - Number of Actor/Director has Collaborations.       Working_On:   
 
 View Table 2 - Number of Actors, Directors, Locations per Country.       Working_On:     Last_Changed:   Status: Completed
 
-View Table 3 - Movie has Actors.      Working_On:     Last_Changed:   Status: Not Started
+View Table 3 - Movie has Actors.      Working_On:     Last_Changed:   Status: Completed
 
-View Table 4 - Movie has Directors.      Working_On:     Last_Changed:   Status: Not Started
+View Table 4 - Movie has Directors.      Working_On:     Last_Changed:   Status: Completed
 
 Table 1 Filters.       Working_On:     Last_Changed:   Status: Completed
 
-Table 2 Filters.       Working_On:     Last_Changed:   Status: Not Started
+Table 2 Filters.       Working_On:     Last_Changed:   Status: Completed
 
-Table 3 Filters.       Working_On:     Last_Changed:   Status: Not Started
+Table 3 Filters.       Working_On:     Last_Changed:   Status: Completed
 
-Table 4 Filters.       Working_On:     Last_Changed:   Status: Not Started
+Table 4 Filters.       Working_On:     Last_Changed:   Status: Completed
