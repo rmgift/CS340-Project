@@ -1,4 +1,19 @@
 <h3>Countries and the Movies</h3>
+<form action="/countries_and_the_movies" method="get">
+  <p>
+    <label for="c.continent">Continent:</label>
+    <select name="c.continent" id="continent">
+			<option value="" selected="selected">All</option>
+      {{#if continents}}
+      {{#each continents}}
+			   <option value="{{this.continent}}">{{this.continent}}</option>
+         {{/each}}
+         {{/if}}
+    </select>
+  </p>
+  <input type="submit" value="Filter Results">
+  <br/>
+</form>
 <table>
     <caption>Number of Actor/Directors From and Movies Made in Countries</caption>
     <tr>

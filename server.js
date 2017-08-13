@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 9798);
+app.set('port', 3000); //9798
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -159,23 +159,57 @@ app.get('/collaborations', function (req, res, next) {
 
 app.get('/countries_and_the_movies', function (req, res, next) {
 	var context = {};
-	var selectString = "SELECT c.name, c.population, COALESCE(mov.mov_count, 0) AS `movieCount`, " +
-	"COALESCE(dir.dir_count, 0) AS `directorCount`, COALESCE(act.act_count, 0)  AS `actorCount` FROM country c LEFT JOIN " +
-	"(SELECT c.id AS `mov_country`, COUNT(mc.cid) AS `mov_count` FROM country c " +
-	"INNER JOIN movies_countries mc ON mc.cid = c.id GROUP BY c.id) AS mov ON " +
-	"mov.mov_country = c.id LEFT JOIN (SELECT c.id AS `dir_country`, COUNT(d.id) " +
-	"AS `dir_count` FROM country c INNER JOIN directors d ON c.id = d.cid GROUP BY c.id) " +
-	"AS dir ON dir.dir_country = c.id LEFT JOIN (SELECT c.id AS `act_country`, " +
-	"COUNT(a.id) AS `act_count` FROM country c INNER JOIN actors a ON c.id = a.cid " +
-	"GROUP BY c.id) AS act ON act.act_country = c.id ORDER BY c.name ASC";
-	mysql.pool.query(selectString, function(err, rows, fields){
+	mysql.pool.query("SELECT DISTINCT continent FROM country", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
 		}
-		context.results = rows;
-		res.render('fancyCountries', context);
+		context.continents = rows;
+		var selectString = "SELECT c.name, c.population, COALESCE(mov.mov_count, 0) AS `movieCount`, " +
+		"COALESCE(dir.dir_count, 0) AS `directorCount`, COALESCE(act.act_count, 0)  AS `actorCount` FROM country c LEFT JOIN " +
+		"(SELECT c.id AS `mov_country`, COUNT(mc.cid) AS `mov_count` FROM country c " +
+		"INNER JOIN movies_countries mc ON mc.cid = c.id GROUP BY c.id) AS mov ON " +
+		"mov.mov_country = c.id LEFT JOIN (SELECT c.id AS `dir_country`, COUNT(d.id) " +
+		"AS `dir_count` FROM country c INNER JOIN directors d ON c.id = d.cid GROUP BY c.id) " +
+		"AS dir ON dir.dir_country = c.id LEFT JOIN (SELECT c.id AS `act_country`, " +
+		"COUNT(a.id) AS `act_count` FROM country c INNER JOIN actors a ON c.id = a.cid " +
+		"GROUP BY c.id) AS act ON act.act_country = c.id";
+
+		//based on answer from https://stackoverflow.com/questions/17385009/can-i-iterate-over-the-query-string-parameters-using-expressjs
+		//and https://stackoverflow.com/questions/35600800/how-to-get-number-of-request-query-parameters-in-express-js
+		var properties = [];
+		var whereString = " WHERE ";
+		if(Object.keys(req.query).length > 0) {
+			for(var property in req.query) {
+				if(req.query.hasOwnProperty(property) && req.query[property] != '') {
+					whereString = whereString + " " + property + " = ? AND ";
+					if(!isNaN(parseInt(req.query[property]))) {
+						properties.push(parseInt(req.query[property]));
+					}
+					else {
+						properties.push(req.query[property]);
+					}
+
+				}
+			}
+			if(properties.length > 0) {
+				selectString = selectString + whereString;
+				selectString = selectString.substring(0, selectString.length - 4);
+			}
+
+		}
+		selectString = selectString +  " ORDER BY c.name ASC";
+		console.log(selectString);
+		mysql.pool.query(selectString, properties, function(err, rows, fields){
+			if(err){
+				next(err);
+				return;
+			}
+			context.results = rows;
+			res.render('fancyCountries', context);
+		});
 	});
+
 });
 
 app.get('/actor_bio_filmography', function (req, res, next) {
@@ -183,9 +217,45 @@ app.get('/actor_bio_filmography', function (req, res, next) {
 	var selectString = "SELECT a.first_name AS `afn`, a.last_name AS `aln`, a.age AS `aAge`, c.name AS `countryName`, " +
 	"m.title AS `mTitle`, m.genre AS `mGenre`, m.runtime AS `mRuntime`, DATE_FORMAT(m.release_date, '%m/%d/%Y') AS " +
 	"formattedDate FROM `actors` a INNER JOIN `country` c ON a.cid = c.id " +
-	"INNER JOIN `actors_movies` am ON am.act_id = a.id INNER JOIN `movies` m ON m.id = am.movie_id " +
-	"ORDER BY `aln` ASC, m.release_date DESC";
-	mysql.pool.query(selectString, function(err, rows, fields){
+	"INNER JOIN `actors_movies` am ON am.act_id = a.id INNER JOIN `movies` m ON m.id = am.movie_id";
+
+
+	//based on answer from https://stackoverflow.com/questions/17385009/can-i-iterate-over-the-query-string-parameters-using-expressjs
+	//and https://stackoverflow.com/questions/35600800/how-to-get-number-of-request-query-parameters-in-express-js
+	var properties = [];
+	var whereString = " WHERE ";
+	if(Object.keys(req.query).length > 0) {
+		for(var property in req.query) {
+			if(req.query.hasOwnProperty(property) && req.query[property] != '') {
+				if(property == 'm.release_date') {
+					whereString = whereString + " " + property + " >= ? AND ";
+					whereString = whereString + " " + property + " <= ? AND ";
+					properties.push(req.query[property] + "-01-01");
+					properties.push(req.query[property] + "-12-31");
+				}
+				else {
+					whereString = whereString + " " + property + " = ? AND ";
+					if(!isNaN(parseInt(req.query[property]))) {
+						properties.push(parseInt(req.query[property]));
+					}
+					else {
+						properties.push(req.query[property]);
+					}
+				}
+
+			}
+		}
+		if(properties.length > 0) {
+			selectString = selectString + whereString;
+			selectString = selectString.substring(0, selectString.length - 4);
+		}
+
+	}
+	selectString = selectString + " ORDER BY `aln` ASC, m.release_date DESC";
+	console.log(selectString);
+	console.log(properties);
+
+	mysql.pool.query(selectString, properties, function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -200,9 +270,41 @@ app.get('/director_bio_filmography', function (req, res, next) {
 	var selectString = "SELECT d.first_name AS `dfn`, d.last_name AS `dln`, d.age AS `dAge`, c.name AS `countryName`, " +
 	"m.title AS `mTitle`, m.genre AS `mGenre`, m.runtime AS `mRuntime`, DATE_FORMAT(m.release_date, '%m/%d/%Y') AS " +
 	"formattedDate FROM `directors` d INNER JOIN `country` c ON d.cid = c.id " +
-	"INNER JOIN `directors_movies` dm ON dm.direct_id = d.id INNER JOIN `movies` m ON m.id = dm.movie_id " +
-	"ORDER BY d.last_name ASC, m.release_date DESC";
-	mysql.pool.query(selectString, function(err, rows, fields){
+	"INNER JOIN `directors_movies` dm ON dm.direct_id = d.id INNER JOIN `movies` m ON m.id = dm.movie_id";
+
+	//based on answer from https://stackoverflow.com/questions/17385009/can-i-iterate-over-the-query-string-parameters-using-expressjs
+	//and https://stackoverflow.com/questions/35600800/how-to-get-number-of-request-query-parameters-in-express-js
+	var properties = [];
+	var whereString = " WHERE ";
+	if(Object.keys(req.query).length > 0) {
+		for(var property in req.query) {
+			if(req.query.hasOwnProperty(property) && req.query[property] != '') {
+				if(property == 'm.release_date') {
+					whereString = whereString + " " + property + " >= ? AND ";
+					whereString = whereString + " " + property + " <= ? AND ";
+					properties.push(req.query[property] + "-01-01");
+					properties.push(req.query[property] + "-12-31");
+				}
+				else {
+					whereString = whereString + " " + property + " = ? AND ";
+					if(!isNaN(parseInt(req.query[property]))) {
+						properties.push(parseInt(req.query[property]));
+					}
+					else {
+						properties.push(req.query[property]);
+					}
+				}
+
+			}
+		}
+		if(properties.length > 0) {
+			selectString = selectString + whereString;
+			selectString = selectString.substring(0, selectString.length - 4);
+		}
+
+	}
+	selectString = selectString + " ORDER BY `dln` ASC, m.release_date DESC";
+	mysql.pool.query(selectString, properties, function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -498,7 +600,7 @@ app.post('/removeAinM', function(req, res, next) {
 // handler routes to the page that displays the current directors of movies table information
 app.get('/directorsOfMovies', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT d.first_name, d.last_name, m.title FROM `directors` d INNER JOIN `directors_movies` dm ON dm.direct_id = d.id INNER JOIN `movies` m ON m.id = dm.movie_id", 
+	mysql.pool.query("SELECT d.first_name, d.last_name, m.title FROM `directors` d INNER JOIN `directors_movies` dm ON dm.direct_id = d.id INNER JOIN `movies` m ON m.id = dm.movie_id",
 	function(err, rows, fields){
 		if(err){
 			next(err);
@@ -512,7 +614,7 @@ app.get('/directorsOfMovies', function (req, res, next) {
 // handler routes to the page that displays the current actors in movies table information
 app.get('/actorsInMovies', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT a.first_name, a.last_name, m.title FROM `actors` a INNER JOIN `actors_movies` am ON am.act_id = a.id INNER JOIN `movies` m ON m.id = am.movie_id", 
+	mysql.pool.query("SELECT a.first_name, a.last_name, m.title FROM `actors` a INNER JOIN `actors_movies` am ON am.act_id = a.id INNER JOIN `movies` m ON m.id = am.movie_id",
 	function(err, rows, fields){
 		if(err){
 			next(err);
@@ -526,7 +628,7 @@ app.get('/actorsInMovies', function (req, res, next) {
 // handler routes to the page that displays the current movies filmed in countries table information
 app.get('/moviesInCountries', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT m.title, c.name FROM `movies` m INNER JOIN `movies_countries` mc ON mc.movie_id = m.id INNER JOIN `country` c ON c.id = mc.cid", 
+	mysql.pool.query("SELECT m.title, c.name FROM `movies` m INNER JOIN `movies_countries` mc ON mc.movie_id = m.id INNER JOIN `country` c ON c.id = mc.cid",
 	function(err, rows, fields){
 		if(err){
 			next(err);

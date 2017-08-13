@@ -1,4 +1,40 @@
 <h3>Actor Bios and Filmography</h3>
+<form action="/actor_bio_filmography" method="get">
+  <p>
+    <label for="a.first_name">Actor First Name:</label>
+    <input type="text" name="a.first_name" id="a.first_name">
+  </p>
+  <p>
+    <label for="a.last_name">Actor Last Name:</label>
+    <input type="text" name="a.last_name" id="a.last_name">
+  </p>
+  <p>
+    <label for="a.age">Age:</label>
+    <input type="text" name="a.age" id="a.age">
+  </p>
+  <p>
+    <label for="c.name">Home Country:</label>
+    <input type="text" name="c.name" id="c.name">
+  </p>
+  <p>
+    <label for="m.title">Movie Title:</label>
+    <input type="text" name="m.title" id="m.title">
+  </p>
+  <p>
+    <label for="m.genre">Movie Genre:</label>
+    <input type="text" name="m.genre" id="m.genre">
+  </p>
+  <p>
+    <label for="m.runtime">Movie Runtime (min):</label>
+    <input type="text" name="m.runtime" id="m.runtime">
+  </p>
+  <p>
+    <label for="m.release_date">Movie Release Year:</label>
+    <input type="text" name="m.release_date" id="m.release_date">
+  </p>
+  <input type="submit" value="Filter Results">
+  <br/>
+</form>
 <table>
     <caption>Personal Information and Filmography of Actors</caption>
     <tr>
