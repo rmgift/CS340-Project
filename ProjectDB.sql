@@ -50,9 +50,9 @@ CREATE TABLE `directors` (
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`age` int(11) NOT NULL,
-	`cid` int(11) NOT NULL DEFAULT '0',
+	`cid` int(11) DEFAULT '0',
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE, ON UPDATE CASCADE
+	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Create a table called actors with the following properties:
@@ -66,9 +66,9 @@ CREATE TABLE `actors` (
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`age` int(11) NOT NULL,
-	`cid` int(11) NOT NULL DEFAULT '0',
+	`cid` int(11) DEFAULT '0',
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Directors Make Movies (MtoM)

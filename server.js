@@ -201,7 +201,7 @@ app.post('/removeMinC', function(req, res, next) {
  */
 app.get('/directors', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT d.id, d.first_name, d.last_name, d.age, c.name FROM `directors` d INNER JOIN `country` c ON c.id = d.cid", function(err, rows, fields){
+	mysql.pool.query("SELECT d.id, d.first_name, d.last_name, d.age, c.name FROM `directors` d LEFT JOIN `country` c ON c.id = d.cid", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -712,18 +712,18 @@ app.get('/reset-table',function(req,res,next){
 							  	"`first_name` varchar(255) NOT NULL," +
 							  	"`last_name` varchar(255) NOT NULL," +
 							  	"`age` int(11) NOT NULL," +
-							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
+							  	"`cid` int(11) DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
+							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var actors = "CREATE TABLE `actors` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`first_name` varchar(255) NOT NULL," +
 							  	"`last_name` varchar(255) NOT NULL," +
 							  	"`age` int(11) NOT NULL," +
-							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
+							  	"`cid` int(11) DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
+							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var dM = "CREATE TABLE `directors_movies` (" +
 							  	"`direct_id` int(11) NOT NULL DEFAULT '0'," +
