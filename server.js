@@ -712,18 +712,18 @@ app.get('/reset-table',function(req,res,next){
 							  	"`first_name` varchar(255) NOT NULL," +
 							  	"`last_name` varchar(255) NOT NULL," +
 							  	"`age` int(11) NOT NULL," +
-							  	"`cid` int(11) NOT NULL," +
+							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var actors = "CREATE TABLE `actors` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`first_name` varchar(255) NOT NULL," +
 							  	"`last_name` varchar(255) NOT NULL," +
 							  	"`age` int(11) NOT NULL," +
-							  	"`cid` int(11) NOT NULL," +
+							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var dM = "CREATE TABLE `directors_movies` (" +
 							  	"`direct_id` int(11) NOT NULL DEFAULT '0'," +
@@ -744,7 +744,7 @@ app.get('/reset-table',function(req,res,next){
 							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`movie_id`,`cid`)," +
 							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`)" +
+							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
 							  	") ENGINE=InnoDB";
 								mysql.pool.query(country, function(err){
 									mysql.pool.query(movies, function(err){
