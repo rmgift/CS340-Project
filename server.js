@@ -714,7 +714,7 @@ app.get('/reset-table',function(req,res,next){
 							  	"`age` int(11) NOT NULL," +
 							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
+							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var actors = "CREATE TABLE `actors` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
@@ -723,28 +723,28 @@ app.get('/reset-table',function(req,res,next){
 							  	"`age` int(11) NOT NULL," +
 							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
+							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var dM = "CREATE TABLE `directors_movies` (" +
 							  	"`direct_id` int(11) NOT NULL DEFAULT '0'," +
 							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`direct_id`,`movie_id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`direct_id`) REFERENCES `directors` (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)" +
+							  	"FOREIGN KEY (`direct_id`) REFERENCES `directors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE," +
+							  	"FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var aM = "CREATE TABLE `actors_movies` (" +
 							  	"`act_id` int(11) NOT NULL DEFAULT '0'," +
 							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`act_id`,`movie_id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`act_id`) REFERENCES `actors` (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)" +
+							  	"FOREIGN KEY (`act_id`) REFERENCES `actors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE," +
+							  	"FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 							  var mC = "CREATE TABLE `movies_countries` (" +
 							  	"`movie_id` int(11) NOT NULL DEFAULT '0'," +
 							  	"`cid` int(11) NOT NULL DEFAULT '0'," +
 							  	"PRIMARY KEY (`movie_id`,`cid`)," +
-							  	"CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)," +
-							  	"CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE" +
+							  	"FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE," +
+							  	"FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE" +
 							  	") ENGINE=InnoDB";
 								mysql.pool.query(country, function(err){
 									mysql.pool.query(movies, function(err){

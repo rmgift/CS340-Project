@@ -52,7 +52,7 @@ CREATE TABLE `directors` (
 	`age` int(11) NOT NULL,
 	`cid` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
-	CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE
+	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE, ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Create a table called actors with the following properties:
@@ -68,7 +68,7 @@ CREATE TABLE `actors` (
 	`age` int(11) NOT NULL,
 	`cid` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
-	CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE
+	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Directors Make Movies (MtoM)
@@ -79,8 +79,8 @@ CREATE TABLE `directors_movies` (
 	`direct_id` int(11) NOT NULL DEFAULT '0',
 	`movie_id` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`direct_id`,`movie_id`),
-	CONSTRAINT FOREIGN KEY (`direct_id`) REFERENCES `directors` (`id`),
-	CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)
+	FOREIGN KEY (`direct_id`) REFERENCES `directors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Actors in Movies (MtoM)
@@ -91,8 +91,8 @@ CREATE TABLE `actors_movies` (
 	`act_id` int(11) NOT NULL DEFAULT '0',
 	`movie_id` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`act_id`,`movie_id`),
-	CONSTRAINT FOREIGN KEY (`act_id`) REFERENCES `actors` (`id`),
-	CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)
+	FOREIGN KEY (`act_id`) REFERENCES `actors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- Movies Filmed in Countries (MtoM)
@@ -103,8 +103,8 @@ CREATE TABLE `movies_countries` (
 	`movie_id` int(11) NOT NULL DEFAULT '0',
 	`cid` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`movie_id`,`cid`),
-	CONSTRAINT FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
-	CONSTRAINT FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE
+	FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`cid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 
