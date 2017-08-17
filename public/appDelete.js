@@ -3,6 +3,29 @@
  * that are triggered by the implementation of elements below.
  */
 
+document.getElementById('postREMOVEcty').addEventListener('click', function (event) {
+    var req = new XMLHttpRequest();
+    var payload = {};
+    var RMcty = document.getElementById("removeCty");
+    payload.name = RMcty.country_name.value;
+
+    req.open("POST", "/removeCountry", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            if (req.responseText) {
+                console.log(req.responseText);
+            }
+        }
+        else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    console.log(payload);
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+});
+
 document.getElementById('postREMOVEam').addEventListener('click', function (event) {
 	var req = new XMLHttpRequest();
 	var payload = {};
