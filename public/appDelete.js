@@ -51,31 +51,6 @@ document.getElementById('postREMOVEam').addEventListener('click', function (even
 	event.preventDefault();
 });
 
-document.getElementById('postREMOVEdm').addEventListener('click', function (event) {
-	var req = new XMLHttpRequest();
-	var payload = {};
-	var RMdm = document.getElementById("removeDfromM");
-	payload.first_name = RMdm.d_fname.value;
-	payload.last_name = RMdm.d_lname.value;
-	payload.title = RMdm.m_title.value;
-
-	req.open("POST", "/removeDofM", true);
-	req.setRequestHeader('Content-Type', 'application/json');
-	req.addEventListener('load', function() {
-		if (req.status >= 200 && req.status < 400) {
-			if (req.responseText) {
-				console.log(req.responseText);
-			}
-		}
-		else {
-			console.log("Error in network request: " + req.statusText);
-		}
-	});
-	console.log(payload);
-	req.send(JSON.stringify(payload));
-	event.preventDefault();
-});
-
 document.getElementById('postREMOVEmc').addEventListener('click', function (event) {
 	var req = new XMLHttpRequest();
 	var payload = {};

@@ -49,15 +49,57 @@ app.get('/removeFromTables', function (req, res, next) {
 	res.render('removeFromTables');
 });
 
-app.get('/updateTables', function (req, res, next) {
+/*app.get('/updateTables', function (req, res, next) {
 	res.render('updateTables');
+});*/
+app.get('/updateTables', function (req, res, next) {
+    var context = {};
+    mysql.pool.query("SELECT DISTINCT name FROM `country`", function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.name = rows;
+        res.render('updateTables', context);
+    });
 });
 
+app.get('/updateActor', function (req, res, next) {
+    /*var context = {};
+    mysql.pool.query("SELECT DISTINCT name FROM `country`", function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.name = rows;*/
+        var selectCountry = "SELECT id FROM `country` WHERE name=" + c.name;
+        mysql.pool.query(selectCountry, function (err, rows, fields) {
+            if (err) {
+                next(err);
+                return;
+            }
+            var tempID = rows[0].id;
+            console.log(tempID);
+            var updateString = "UPDATE actors SET first_name=?, last_name=?, age=?, cid=?"; 
+            //mysql.pool.querry(updateString, [a.fname, a.lname, a.age, tempID], function (err, result) {
+            mysql.pool.querry(updateString, function (err, result) {
+                if (err) {
+                    next(err);
+                    return;
+                }
+                //http://localhost:3000/updateActor?a.fname=Samuel&a.lname=Jackson&a.age=75&c.name=Australia&updateActor=updateActor
+                //context.result = rows;
+                //res.render('updateTables', context);
+                res.send(result.insertId.toString());
+            });
+        });
+    });
+//});
 
 /* COUNTRY ROUTE HANDLERS FOLLOW
  * "/countries" = routes to the page that displays the current countries table information
  * "/insert_country" = route inserts country into table that comes from form submission
- * "/removeCountry" = 
+ * "/removeCountry" =
  */
 app.get('/countries', function (req, res, next) {
 	var context = {};
@@ -114,7 +156,7 @@ app.get('/movies', function (req, res, next) {
 
 app.get('/moviesInCountries', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT m.title, c.name FROM `movies` m INNER JOIN `movies_countries` mc ON mc.movie_id = m.id INNER JOIN `country` c ON c.id = mc.cid",
+	mysql.pool.query("SELECT m.title, c.name FROM `movies` m INNER JOIN `movies_countries` mc ON mc.movie_id = m.id LEFT JOIN `country` c ON c.id = mc.cid",
 	function(err, rows, fields){
 		if(err){
 			next(err);
@@ -195,9 +237,7 @@ app.post('/removeMinC', function(req, res, next) {
  * "/directors" = routes to the page that displays the current directors table information
  * "/directorOfMovies" = routes to the page that displays the current directors of movies table information
  * "/insert_director" = route inserts director into table that comes from form submission
- * "/update_director" =
  * "/insertDofM" = route inserts director of a movie into table that comes from form submission
- * "/removeDofM" =
  */
 app.get('/directors', function (req, res, next) {
 	var context = {};
@@ -243,35 +283,6 @@ app.post('/insert_director',function(req,res,next){
   });
 });
 
-app.post('/update_director', function(req,res,next) {
-	mysql.pool.query("SELECT id FROM `directors` WHERE first_name=? AND last_name=?", [req.body.first_name, req.body.last_name], function(err, rows, fields){
-		if (err) {
-			next(err);
-			return;
-		}
-		var curVals = rows[0];
-		var curID = rows[0].id;
-		console.log(curVals);
-		mysql.pool.query("SELECT id FROM `country` WHERE name=?", [req.body.cid], function(err, rows, fields){
-			if (err) {
-				next(err);
-				return;
-			}
-			var coID = rows[0].id;
-			console.log(coID);
-			mysql.pool.query("UPDATE directors SET first_name=?, last_name=?, age=?, cid=? WHERE id=?",
-			[req.body.first_name || curVals.first_name, req.body.last_name || curVals.last_name, req.body.age || curVals.age, coID || curVals.cid, curID],
-			function(err, result) {
-				if (err) {
-					next(err);
-					return;
-				}
-				res.send(result.insertId.toString());
-			});
-		});
-	});
-});
-
 app.post('/insertDofM', function(req, res, next) {
 	mysql.pool.query("SELECT id FROM `directors` WHERE first_name=? AND last_name=?", [req.body.first_name, req.body.last_name], function(err, rows, fields){
 		if (err) {
@@ -288,32 +299,6 @@ app.post('/insertDofM', function(req, res, next) {
 			var mID = rows[0].id;
 			console.log(mID);
 			mysql.pool.query("INSERT INTO directors_movies (`direct_id`, `movie_id`) VALUES (?, ?)", [dirID || null, mID || null], function(err, result){
-				if (err) {
-					next(err);
-					return;
-				}
-				res.send(result.insertId.toString());
-			});
-		});
-	});
-});
-
-app.post('/removeDofM', function(req, res, next) {
-	mysql.pool.query("SELECT id FROM `directors` WHERE first_name=? AND last_name=?", [req.body.first_name, req.body.last_name], function(err, rows, fields) {
-		if (err) {
-			next(err);
-			return;
-		}
-		var dirID = rows[0].id;
-		console.log(dirID);
-		mysql.pool.query("SELECT id FROM `movies` WHERE title=?", [req.body.title], function(err, rows, fields){
-			if (err) {
-				next(err);
-				return;
-			}
-			var movID = rows[0].id;
-			console.log(movID);
-			mysql.pool.query("DELETE FROM `directors_movies` WHERE direct_id=? AND movie_id=?", [dirID, movID], function(err, result){
 				if (err) {
 					next(err);
 					return;
