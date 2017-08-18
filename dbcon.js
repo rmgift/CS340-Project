@@ -1,3 +1,10 @@
+/*
+ * Filename: dbcon.js
+ * Authors: Zachary Anderson, Ryan Gift
+ * Date: 8/18/17
+ * Description: Database credentials to be exported to server.js.
+ */
+
 var mysql = require('mysql');
 /*var pool = mysql.createPool({
   host            : 'classmysql.engr.oregonstate.edu',

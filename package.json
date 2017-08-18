@@ -1,7 +1,7 @@
 {
   "name": "CS340-Project",
   "version": "1.0.0",
-  "description": "post to http.bin",
+  "description": "Directors who like to work with the same Actors database",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

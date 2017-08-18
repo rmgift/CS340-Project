@@ -1,6 +1,9 @@
-/* This file provides all the functionality to respond and send information
- * to information the server and then route our calls to the appropriate
- * handlebars page
+/*
+ * Filename: server.js
+ * Authors: Zachary Anderson, Ryan Gift
+ * Date: 8/18/17
+ * Description: This file provides all the functionality to receive information
+ *              from the client and route calls to the appropriate handlers.
  */
 
 // imports our keys and access tokens
@@ -41,6 +44,9 @@ app.get('/', function (req, res, next) {
 	res.render('home');
 });
 
+/* get handler route for the addToTables page. It collects information from the
+ * database to be used in drop down menus.
+ */
 app.get('/addToTables', function (req, res, next) {
     var context = {};
     mysql.pool.query("SELECT id, name FROM `country` ORDER BY name ASC", function (err, rows, fields) {
@@ -74,6 +80,9 @@ app.get('/addToTables', function (req, res, next) {
     });
 });
 
+/* get handler route for the removeFromTables page. It collects information from the
+ * database to be used in drop down menus.
+ */
 app.get('/removeFromTables', function (req, res, next) {
     var context = {};
     mysql.pool.query("SELECT id, name FROM `country` ORDER BY name ASC", function (err, rows, fields) {
@@ -93,6 +102,9 @@ app.get('/removeFromTables', function (req, res, next) {
     });
 });
 
+/* get handler route for the updateTables page. It collects information from the
+ * database to be used in drop down menus.
+ */
 app.get('/updateTables', function (req, res, next) {
 	var context = {};
 	mysql.pool.query("SELECT id, name FROM `country` ORDER BY name ASC", function (err, rows, fields) {
@@ -116,8 +128,8 @@ app.get('/updateTables', function (req, res, next) {
 
 /* COUNTRY ROUTE HANDLERS FOLLOW
  * "/countries" = routes to the page that displays the current countries table information
- * "/insert_country" = route inserts country into table that comes from form submission
- * "/removeCountry" =
+ * "/insert_country" = route inserts country from form submission into Country table
+ * "/removeCountry" = route removes a country from form submission from the Country table
  */
 app.get('/countries', function (req, res, next) {
 	var context = {};
@@ -275,7 +287,7 @@ app.post('/insertDofM', function(req, res, next) {
  * "/actors" = routes to the page that displays the current actors table information
  * "/actorsInMovies" = routes to the page that displays the current actors in movies table information
  * "/insert_actor" = route inserts actor into table that comes from form submission
- * "/update_actor" =
+ * "/update_actor" = route updates an Actor based on the form submission
  * "/insertAinM" = route inserts an actor in a movie into table that comes from form submission
  */
 app.get('/actors', function (req, res, next) {
@@ -345,10 +357,15 @@ app.post('/insertAinM', function(req, res, next) {
 
 
 /* ADVANCED TABLES
- * "/collaborations" =
- * "/countries_and_the_movies" =
- * "/actor_bio_filmography" =
- * "/director_bio_filmography" =
+ * "/collaborations" = Builds query based on form submission and returns results of that query.
+ *                     Resulting table displays number of Director/Actor collaborations.
+ * "/countries_and_the_movies" = Builds query based on form submission and returns results of that query.
+ *                               Resulting table displays Movies filmed in and Directors/Actors from
+ *                               each Country.
+ * "/actor_bio_filmography" = Builds query based on form submission and returns results of that query.
+ *                            Resulting table displays Actor bio and filmography information.
+ * "/director_bio_filmography" = Builds query based on form submission and returns results of that query.
+ *                               Resulting table displays Director bio and filmography information.
  * "/reset-table" = routes to the page that resets the tables to contain no information
  */
 app.get('/collaborations', function (req, res, next) {
