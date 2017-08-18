@@ -18,39 +18,31 @@
     </div>
 </form>
 
-<h2>Remove Actor From Movie:</h2>
-<form id="removeAfromM">
-	<div>
-        	<label class="inputLabel">Actors First Name:</label>
-        	<input class="userInput" type="text" name="a_fname" id="a_fname">
-    	</div>
-    	<br />
-	<div>
-        	<label class="inputLabel">Actors Last Name:</label>
-        	<input class="userInput" type="text" name="a_lname" id="a_lname">
-	</div>
-	<br />
-	<div>
-        	<label class="inputLabel">Movie Title:</label>
-        	<input class="userInput" type="text" name="movie_title" id="movie_title">
-    	</div>
-    	<br />
-	<div>
-		<input type="submit" name="RemoveActorFromMovie" value="RemoveActorFromMovie" id="postREMOVEam">
-	</div>
-</form>
-
 <h2>Remove Movie from Country:</h2>
-<form id="removeMfromC">
+<form id="removeMfromC" action="/removeMinC" method="post">
 	<div>
-        	<label class="inputLabel">Movie Title:</label>
-        	<input class="userInput" type="text" name="movie_title" id="movie_title">
-    	</div>
-    	<br />
+        <label class="inputLabel">Movie Title:</label>
+        <select name="title" id="title">
+            <option value="" selected="selected">Select Movie Title</option>
+            {{#if title}}
+            {{#each title}}
+            <option id="selectedName" value="{{this.title}}">{{this.title}}</option>
+            {{/each}}
+            {{/if}}
+        </select>
+    </div>
+    <br />
 	<div>
-        	<label class="inputLabel">Country Name:</label>
-        	<input class="userInput" type="text" name="country_name" id="country_name">
-	</div>
+        <label class="inputLabel">Country Name:</label>
+        <select name="name" id="name">
+            <option value="" selected="selected">Select Country</option>
+            {{#if name}}
+            {{#each name}}
+            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+            {{/if}}
+          </select>
+    </div>
 	<br />
 	<div>
 		<input type="submit" name="RemoveMovieFromCountry" value="RemoveMovieFromCountry" id="postREMOVEmc">

@@ -12,7 +12,7 @@ document.getElementById('postUpAct').addEventListener('click', function (event) 
 	payload.first_name = upAct.a_fname.value;
 	payload.last_name = upAct.a_lname.value;
 	payload.age = upAct.a_age.value;
-	payload.name = upAct.name.value;
+	payload.cid = upAct.a_cid.value;
 
 	req.open("POST", "/update_actor", true);
 	req.setRequestHeader('Content-Type', 'application/json');

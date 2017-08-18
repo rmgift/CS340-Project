@@ -61,10 +61,10 @@ document.getElementById('postNewDirector').addEventListener('click', function (e
     var req = new XMLHttpRequest();
     var payload = {};
     var newDirector = document.getElementById("newDirector");
-    payload.fname = newDirector.first_name.value;
-    payload.lname = newDirector.last_name.value;
+    payload.first_name = newDirector.first_name.value;
+    payload.last_name = newDirector.last_name.value;
     payload.age = newDirector.age.value;
-    payload.country = newDirector.country_director.value;
+    payload.name = newDirector.name.value;
 
 
     req.open("POST", "/insert_director", true);
@@ -89,10 +89,10 @@ document.getElementById('postNewActor').addEventListener('click', function (even
     var req = new XMLHttpRequest();
     var payload = {};
     var newActor = document.getElementById("newActor");
-    payload.fname = newActor.first_name.value;
-    payload.lname = newActor.last_name.value;
+    payload.first_name = newActor.first_name.value;
+    payload.last_name = newActor.last_name.value;
     payload.age = newActor.age.value;
-    payload.country = newActor.country_actor.value;
+    payload.name = newActor.name.value;
 
     req.open("POST", "/insert_actor", true);
     req.setRequestHeader('Content-Type', 'application/json');
@@ -116,8 +116,8 @@ document.getElementById('postNewMinC').addEventListener('click', function (event
 	var req = new XMLHttpRequest();
 	var payload = {};
 	var mINc = document.getElementById("newMinC");
-	payload.title = mINc.movie_title.value;
-	payload.country = mINc.movie_country.value;
+	payload.title = mINc.title.value;
+	payload.name = mINc.name.value;
 
 	req.open("POST", "/insertMinC", true);
 	req.setRequestHeader('Content-Type', 'application/json');
@@ -143,7 +143,7 @@ document.getElementById('postNewDofM').addEventListener('click', function (event
 	var dOFm = document.getElementById("newDofM");
 	payload.first_name = dOFm.d_fname.value;
 	payload.last_name = dOFm.d_lname.value;
-	payload.title = dOFm.d_movie_title.value;
+	payload.title = dOFm.title.value;
 
 	req.open("POST", "/insertDofM", true);
 	req.setRequestHeader('Content-Type', 'application/json');
@@ -169,7 +169,7 @@ document.getElementById('postNewAinM').addEventListener('click', function (event
 	var aINm = document.getElementById("newAinM");
 	payload.first_name = aINm.a_fname.value;
 	payload.last_name = aINm.a_lname.value;
-	payload.title = aINm.a_movie_title.value;
+	payload.title = aINm.title.value;
 
 	req.open("POST", "/insertAinM", true);
 	req.setRequestHeader('Content-Type', 'application/json');
