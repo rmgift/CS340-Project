@@ -327,21 +327,15 @@ app.post('/insert_actor',function(req,res,next){
 });
 
 app.post('/update_actor', function(req,res,next) {
-	mysql.pool.query("SELECT * FROM `actors` WHERE id=?", [req.body.actorU], function(err, rows, fields){
+	console.log(req.body);
+	mysql.pool.query("UPDATE actors SET first_name=?, last_name=?, age=?, cid=? WHERE id=?",
+	[req.body.first_name, req.body.last_name, req.body.age, req.body.countryAU, req.body.actorU],
+	function(err, result) {
 		if (err) {
 			next(err);
 			return;
 		}
-		var curVals = rows[0];
-		mysql.pool.query("UPDATE actors SET first_name=?, last_name=?, age=?, cid=? WHERE id=?",
-		[req.body.first_name || curVals.first_name, req.body.last_name || curVals.last_name, req.body.age || curVals.age, req.body.countryAU || curVals.cid, req.body.actorU],
-		function(err, result) {
-			if (err) {
-				next(err);
-				return;
-			}
-			res.redirect('/updateTables');
-		});
+		res.redirect('/updateTables');
 	});
 });
 
