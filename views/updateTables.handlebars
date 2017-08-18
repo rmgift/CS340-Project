@@ -8,7 +8,7 @@
             <option value="" selected="selected">Select Actor:</option>
             {{#if actors}}
             {{#each actors}}
-            <option id="selectedName" value="{{this.aid}}">{{this.fname}} {{this.lname}}  Age:{{this.aage}} Country:{{this.home_country}}</option>
+            <option id="selectedName" value="{{this.aid}}">{{this.fname}} {{this.lname}} -- Age:{{this.aage}} -- Country:{{this.home_country}}</option>
             {{/each}}
             {{/if}}
         </select>
