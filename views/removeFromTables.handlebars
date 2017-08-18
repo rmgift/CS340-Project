@@ -1,9 +1,16 @@
 <br />
 <h2>Remove Country from Table:</h2>
-<form id="removeCty">
+<form id="removeCty" action="/removeCountry" method="post">
     <div>
         <label class="inputLabel">Country Name:</label>
-        <input class="userInput" type="text" name="country_name" id="country_name">
+        <select name="name" id="name">
+            <option value="" selected="selected">Select Country</option>
+            {{#if name}}
+            {{#each name}}
+            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+            {{/if}}
+        </select>
     </div>
     <br />
     <div>
@@ -49,5 +56,3 @@
 		<input type="submit" name="RemoveMovieFromCountry" value="RemoveMovieFromCountry" id="postREMOVEmc">
 	</div>
 </form>
-
-<script src="./appDelete.js"></script>

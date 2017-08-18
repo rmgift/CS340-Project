@@ -46,12 +46,17 @@ app.get('/addToTables', function (req, res, next) {
 });
 
 app.get('/removeFromTables', function (req, res, next) {
-	res.render('removeFromTables');
+    var context = {};
+    mysql.pool.query("SELECT DISTINCT name FROM `country`", function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.name = rows;
+        res.render('removeFromTables', context);
+    });
 });
 
-/*app.get('/updateTables', function (req, res, next) {
-	res.render('updateTables');
-});*/
 app.get('/updateTables', function (req, res, next) {
     var context = {};
     mysql.pool.query("SELECT DISTINCT name FROM `country`", function (err, rows, fields) {
@@ -64,37 +69,8 @@ app.get('/updateTables', function (req, res, next) {
     });
 });
 
-app.get('/updateActor', function (req, res, next) {
-    /*var context = {};
-    mysql.pool.query("SELECT DISTINCT name FROM `country`", function (err, rows, fields) {
-        if (err) {
-            next(err);
-            return;
-        }
-        context.name = rows;*/
-        var selectCountry = "SELECT id FROM `country` WHERE name=" + c.name;
-        mysql.pool.query(selectCountry, function (err, rows, fields) {
-            if (err) {
-                next(err);
-                return;
-            }
-            var tempID = rows[0].id;
-            console.log(tempID);
-            var updateString = "UPDATE actors SET first_name=?, last_name=?, age=?, cid=?"; 
-            //mysql.pool.querry(updateString, [a.fname, a.lname, a.age, tempID], function (err, result) {
-            mysql.pool.querry(updateString, function (err, result) {
-                if (err) {
-                    next(err);
-                    return;
-                }
-                //http://localhost:3000/updateActor?a.fname=Samuel&a.lname=Jackson&a.age=75&c.name=Australia&updateActor=updateActor
-                //context.result = rows;
-                //res.render('updateTables', context);
-                res.send(result.insertId.toString());
-            });
-        });
-    });
-//});
+
+
 
 /* COUNTRY ROUTE HANDLERS FOLLOW
  * "/countries" = routes to the page that displays the current countries table information
@@ -130,7 +106,7 @@ app.post('/removeCountry', function (req, res, next) {
             next(err);
             return;
         }
-        res.send(result.insertId.toString());
+        res.redirect('/removeFromTables');
     });
 });
 
@@ -371,7 +347,7 @@ app.post('/update_actor', function(req,res,next) {
 		var curVals = rows[0];
 		var curID = rows[0].id;
 		console.log(curVals);
-		mysql.pool.query("SELECT id FROM `country` WHERE name=?", [req.body.cid], function(err, rows, fields){
+		mysql.pool.query("SELECT id FROM `country` WHERE name=?", [req.body.name], function(err, rows, fields){
 			if (err) {
 				next(err);
 				return;
@@ -385,7 +361,7 @@ app.post('/update_actor', function(req,res,next) {
 					next(err);
 					return;
 				}
-				res.send(result.insertId.toString());
+                res.redirect('/updateTables');
 			});
 		});
 	});

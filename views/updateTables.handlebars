@@ -1,6 +1,6 @@
 <br />
 <h2>Update Actors in Movies Information:</h2>
-<form id="updateActor" action="/updateActor" method="get">
+<form id="updateActor" action="/update_actor" method="post">
 	<div>
 		<label class="inputLabel">Actor First Name:</label>
 		<input class="userInput" type="text" name="first_name" id="first_name">
@@ -18,7 +18,7 @@
 	<br />
 	<div>
 		<label class="inputLabel">Actor Country:</label>
-        <select name="country" id="country">
+        <select name="name" id="name">
             <option value="" selected="selected">Select Country</option>
             {{#if name}}
             {{#each name}}
@@ -32,5 +32,3 @@
 		<input type="submit" name="updateActor" value="updateActor" id="postUpAct">
 	</div>
 </form>
-
-<!--<script src="./appUpdate.js"></script>-->

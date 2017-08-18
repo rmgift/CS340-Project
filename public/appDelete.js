@@ -7,7 +7,7 @@ document.getElementById('postREMOVEcty').addEventListener('click', function (eve
     var req = new XMLHttpRequest();
     var payload = {};
     var RMcty = document.getElementById("removeCty");
-    payload.name = RMcty.country_name.value;
+    payload.name = RMcty.name.value;
 
     req.open("POST", "/removeCountry", true);
     req.setRequestHeader('Content-Type', 'application/json');
