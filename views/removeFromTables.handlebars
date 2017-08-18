@@ -3,11 +3,11 @@
 <form id="removeCty" action="/removeCountry" method="post">
     <div>
         <label class="inputLabel">Country Name:</label>
-        <select name="name" id="name">
+        <select name="countryR" id="countryR">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -22,11 +22,11 @@
 <form id="removeMfromC" action="/removeMinC" method="post">
 	<div>
         <label class="inputLabel">Movie Title:</label>
-        <select name="title" id="title">
+        <select name="movieCR" id="movieCR">
             <option value="" selected="selected">Select Movie Title</option>
-            {{#if title}}
-            {{#each title}}
-            <option id="selectedName" value="{{this.title}}">{{this.title}}</option>
+            {{#if movies}}
+            {{#each movies}}
+            <option id="selectedName" value="{{this.id}}">{{this.title}} - {{this.release}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -34,11 +34,11 @@
     <br />
 	<div>
         <label class="inputLabel">Country Name:</label>
-        <select name="name" id="name">
+        <select name="countryMR" id="countryMR">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
           </select>

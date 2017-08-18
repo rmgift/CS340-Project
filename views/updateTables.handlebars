@@ -1,6 +1,20 @@
 <br />
 <h2>Update Actors in Movies Information:</h2>
 <form id="updateActor" action="/update_actor" method="post">
+
+	<div>
+    <label class="inputLabel">Actor To Update:</label>
+        <select name="actorU" id="actorU">
+            <option value="" selected="selected">Select Actor:</option>
+            {{#if actors}}
+            {{#each actors}}
+            <option id="selectedName" value="{{this.aid}}">{{this.fname}} {{this.lname}}  Age:{{this.aage}} Country:{{this.home_country}}</option>
+            {{/each}}
+            {{/if}}
+        </select>
+	</div>
+	<br />
+	<br />
 	<div>
 		<label class="inputLabel">Actor First Name:</label>
 		<input class="userInput" type="text" name="first_name" id="first_name">
@@ -18,11 +32,11 @@
 	<br />
 	<div>
 		<label class="inputLabel">Actor Country:</label>
-        <select name="name" id="name">
+        <select name="countryAU" id="countryAU">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
         </select>

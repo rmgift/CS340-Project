@@ -75,11 +75,11 @@
 	<br />
 	<div>
 		<label class="inputLabel">Country:</label>
-        <select name="name" id="name">
+        <select name="countryD" id="countryD">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -109,11 +109,11 @@
 	<br />
 	<div>
 		<label class="inputLabel">Country:</label>
-        <select name="name" id="name">
+        <select name="countryA" id="countryA">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -128,11 +128,11 @@
 <form id="newMinC" action="/insertMinC" method="post">
 	<div>
 		<label class="inputLabel">Movie Title:</label>
-        <select name="title" id="title">
+        <select name="movieC" id="movieC">
             <option value="" selected="selected">Select Movie Title</option>
-            {{#if title}}
-            {{#each title}}
-            <option id="selectedName" value="{{this.title}}">{{this.title}}</option>
+            {{#if movies}}
+            {{#each movies}}
+            <option id="selectedName" value="{{this.id}}">{{this.title}} - {{this.release}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -140,11 +140,11 @@
 	<br />
 	<div>
 		<label class="inputLabel">Country:</label>
-        <select name="name" id="name">
+        <select name="countryM" id="countryM">
             <option value="" selected="selected">Select Country</option>
-            {{#if name}}
-            {{#each name}}
-            <option id="selectedName" value="{{this.name}}">{{this.name}}</option>
+            {{#if countries}}
+            {{#each countries}}
+            <option id="selectedName" value="{{this.id}}">{{this.name}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -158,22 +158,24 @@
 <h2>Input A Director of a Movie</h2>
 <form id="newDofM"  action="/insertDofM" method="post">
 	<div>
-		<label class="inputLabel">Director First Name:</label>
-		<input class="userInput" type="text" name="d_fname" id="d_fname">
-	</div>
-	<br />
-	<div>
-		<label class="inputLabel">Director Last Name:</label>
-		<input class="userInput" type="text" name="d_lname" id="d_lname">
+    <label class="inputLabel">Director Name:</label>
+        <select name="directorM" id="actorM">
+            <option value="" selected="selected">Select Director Name:</option>
+            {{#if directors}}
+            {{#each directors}}
+            <option id="selectedName" value="{{this.id}}">{{this.first_name}} {{this.last_name}} - {{this.age}}</option>
+            {{/each}}
+            {{/if}}
+        </select>
 	</div>
 	<br />
 	<div>
 		<label class="inputLabel">Movie Title:</label>
-        <select name="title" id="title">
+        <select name="movieD" id="movieD">
             <option value="" selected="selected">Select Movie Title</option>
-            {{#if title}}
-            {{#each title}}
-            <option id="selectedName" value="{{this.title}}">{{this.title}}</option>
+            {{#if movies}}
+            {{#each movies}}
+            <option id="selectedName" value="{{this.id}}">{{this.title}} - {{this.release}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -187,22 +189,24 @@
 <h2>Input an Actor in a Movie</h2>
 <form id="newAinM" action="/insertAinM" method="post">
 	<div>
-		<label class="inputLabel">Actor First Name:</label>
-		<input class="userInput" type="text" name="a_fname" id="a_fname">
-	</div>
-	<br />
-	<div>
-		<label class="inputLabel">Actor Last Name:</label>
-		<input class="userInput" type="text" name="a_lname" id="a_lname">
+    <label class="inputLabel">Actor Name:</label>
+        <select name="actorM" id="actorM">
+            <option value="" selected="selected">Select Actor Name:</option>
+            {{#if actors}}
+            {{#each actors}}
+            <option id="selectedName" value="{{this.id}}">{{this.first_name}} {{this.last_name}} - {{this.age}}</option>
+            {{/each}}
+            {{/if}}
+        </select>
 	</div>
 	<br />
 	<div>
 		<label class="inputLabel">Movie Title:</label>
-        <select name="title" id="title">
+        <select name="movieA" id="movieA">
             <option value="" selected="selected">Select Movie Title</option>
-            {{#if title}}
-            {{#each title}}
-            <option id="selectedName" value="{{this.title}}">{{this.title}}</option>
+            {{#if movies}}
+            {{#each movies}}
+            <option id="selectedName" value="{{this.id}}">{{this.title}} - {{this.release}}</option>
             {{/each}}
             {{/if}}
         </select>
@@ -212,4 +216,3 @@
 		<input type="submit" name="AddActorInMovie" value="AddActorInMovie" id="postNewAinM">
 	</div>
 </form>
-
