@@ -1,4 +1,4 @@
--- Name: Ryan Gift and Zachary Anderson 
+-- Name: Ryan Gift and Zachary Anderson
 -- CS340 Project
 -- Due Date: 08/18/2017
 -- zanderson3j = Zach's github
@@ -20,7 +20,7 @@ CREATE TABLE `country` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL,
 	`continent` varchar(255) NOT NULL,
-	`population` decimal(7,1) NOT NULL,
+	`population` decimal(7,1),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -29,13 +29,13 @@ CREATE TABLE `country` (
 -- title - a varchar with a maximum length of 255 characters, cannot be null
 -- genre - a varchar with a maximum length of 255 characters, cannot be null
 -- runtime - an integer
--- release_date - a date type 
+-- release_date - a date type
 CREATE TABLE `movies` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`title` varchar(255) NOT NULL,
-	`genre` varchar(255) NOT NULL,
-	`runtime` int(11) NOT NULL,
-	`release_date` date,
+	`genre` varchar(255),
+	`runtime` int(11),
+	`release_date` date NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -48,7 +48,7 @@ CREATE TABLE `movies` (
 CREATE TABLE `directors` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(255) NOT NULL,
-	`last_name` varchar(255) NOT NULL,
+	`last_name` varchar(255),
 	`age` int(11) NOT NULL,
 	`cid` int(11) DEFAULT '0',
 	PRIMARY KEY (`id`),
@@ -64,7 +64,7 @@ CREATE TABLE `directors` (
 CREATE TABLE `actors` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(255) NOT NULL,
-	`last_name` varchar(255) NOT NULL,
+	`last_name` varchar(255),
 	`age` int(11) NOT NULL,
 	`cid` int(11) DEFAULT '0',
 	PRIMARY KEY (`id`),

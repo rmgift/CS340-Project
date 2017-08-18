@@ -113,7 +113,7 @@ app.get('/updateTables', function (req, res, next) {
 					return;
 			}
 			context.countries = rows;
-			mysql.pool.query("SELECT a.id AS `aid`, a.first_name AS `fname`, a.last_name AS `lname`, a.age AS `aage`, c.name AS `home_country` FROM actors a INNER JOIN" +
+			mysql.pool.query("SELECT a.id AS `aid`, a.first_name AS `fname`, a.last_name AS `lname`, a.age AS `aage`, c.name AS `home_country` FROM actors a LEFT JOIN" +
 				" country c ON a.cid = c.id ORDER BY a.last_name ASC, a.first_name ASC", function (err, rows, fields) {
 					if (err) {
 							next(err);
@@ -292,7 +292,7 @@ app.post('/insertDofM', function(req, res, next) {
  */
 app.get('/actors', function (req, res, next) {
 	var context = {};
-	mysql.pool.query("SELECT a.id, a.first_name, a.last_name, a.age, c.name FROM `actors` a INNER JOIN `country` c ON c.id = a.cid", function(err, rows, fields){
+	mysql.pool.query("SELECT a.id, a.first_name, a.last_name, a.age, c.name FROM `actors` a LEFT JOIN `country` c ON c.id = a.cid", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
@@ -327,10 +327,8 @@ app.post('/insert_actor',function(req,res,next){
 });
 
 app.post('/update_actor', function(req,res,next) {
-	console.log(req.body);
 	mysql.pool.query("UPDATE actors SET first_name=?, last_name=?, age=?, cid=? WHERE id=?",
-	[req.body.first_name, req.body.last_name, req.body.age, req.body.countryAU, req.body.actorU],
-	function(err, result) {
+	[req.body.first_name || null, req.body.last_name || null, req.body.age || null, req.body.countryAU || null, req.body.actorU || null], function(err, result) {
 		if (err) {
 			next(err);
 			return;
@@ -592,21 +590,21 @@ app.get('/reset-table',function(req,res,next){
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`name` varchar(255) NOT NULL," +
 							  	"`continent` varchar(255) NOT NULL," +
-							  	"`population` decimal(7,1) NOT NULL," +
+							  	"`population` decimal(7,1)," +
 							  	"PRIMARY KEY (`id`)" +
 							  	") ENGINE=InnoDB";
 							  var movies = "CREATE TABLE `movies` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`title` varchar(255) NOT NULL," +
-							  	"`genre` varchar(255) NOT NULL," +
-							  	"`runtime` int(11) NOT NULL," +
-							  	"`release_date` date," +
+							  	"`genre` varchar(255)," +
+							  	"`runtime` int(11)," +
+							  	"`release_date` date NOT NULL," +
 							  	"PRIMARY KEY (`id`)" +
 							  	") ENGINE=InnoDB";
 							  var directors = "CREATE TABLE `directors` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`first_name` varchar(255) NOT NULL," +
-							  	"`last_name` varchar(255) NOT NULL," +
+							  	"`last_name` varchar(255)," +
 							  	"`age` int(11) NOT NULL," +
 							  	"`cid` int(11) DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
@@ -615,7 +613,7 @@ app.get('/reset-table',function(req,res,next){
 							  var actors = "CREATE TABLE `actors` (" +
 							  	"`id` int(11) NOT NULL AUTO_INCREMENT," +
 							  	"`first_name` varchar(255) NOT NULL," +
-							  	"`last_name` varchar(255) NOT NULL," +
+							  	"`last_name` varchar(255)," +
 							  	"`age` int(11) NOT NULL," +
 							  	"`cid` int(11) DEFAULT '0'," +
 							  	"PRIMARY KEY (`id`)," +
