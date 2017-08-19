@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));	/* deal with url encoded su
 app.use(bodyParser.json());
 
 /* 'port' is  an arbitrary name we're using to reference our port number */
-app.set('port', 3000); //9798
+app.set('port', 9798);
 /* use static allows us to access our app.js file in the public folder
    this is necessary because our app.js file is a client side file that is
    scripted in the table.handlebars layout*/
@@ -686,5 +686,5 @@ app.use(function (err, req, res, next) {
    argument the 2nd argument is a callback to call when the server is started,
    this prints message and port numbe */
 app.listen(app.get('port'), function () {
-    console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+    console.log('Express started on http://flip3.engr.oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
