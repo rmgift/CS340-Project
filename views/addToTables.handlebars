@@ -10,12 +10,12 @@
 <h2>Input A New Country:</h2>
 <form id="newCountry" action="/insert_country" method="post">
     	<div>
-        	<label class="inputLabel">Name:</label>
+        	<label class="inputLabel">Name (Required):</label>
         	<input class="userInput" type="text" name="name" id="name">
     	</div>
     	<br />
     	<div>
-        	<label class="inputLabel">Continent:</label>
+        	<label class="inputLabel">Continent (Required):</label>
         	<select class="userInput" name="continent" id="continent">
 			<option value="North America">North America</option>
 			<option value="South America">South America</option>
@@ -40,7 +40,7 @@
 <h2>Input A New Movie</h2>
 <form id="newMovie" action="/insert_movie" method="post">
 	<div>
-        	<label class="inputLabel">Title:</label>
+        	<label class="inputLabel">Title (Required):</label>
         	<input class="userInput" type="text" name="title" id="title">
 	</div>
 	<br />
@@ -55,7 +55,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Release Date (YYYY-MM-DD):</label>
+		<label class="inputLabel">Release Date (YYYY-MM-DD) (Required):</label>
 		<input class="userInput" type="date" name="release_date" id="release_date">
 	</div>
 	<br />
@@ -67,7 +67,7 @@
 <h2>Input A New Director</h2>
 <form id="newDirector" action="/insert_director" method="post">
 	<div>
-		<label class="inputLabel">First Name:</label>
+		<label class="inputLabel">First Name (Required):</label>
 		<input class="userInput" type="text" name="first_name" id="first_name">
 	</div>
 	<br />
@@ -77,7 +77,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Age:</label>
+		<label class="inputLabel">Age (Required):</label>
 		<input class="userInput" type="number" name="age" id="age">
 	</div>
 	<br />
@@ -101,7 +101,7 @@
 <h2>Input A New Actor</h2>
 <form id="newActor" action="/insert_actor" method="post">
 	<div>
-		<label class="inputLabel">First Name:</label>
+		<label class="inputLabel">First Name (Required):</label>
 		<input class="userInput" type="text" name="first_name" id="first_name">
 	</div>
 	<br />
@@ -111,7 +111,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Age:</label>
+		<label class="inputLabel">Age (Required):</label>
 		<input class="userInput" type="number" name="age" id="age">
 	</div>
 	<br />
@@ -135,7 +135,7 @@
 <h2>Input A Movie In a Country</h2>
 <form id="newMinC" action="/insertMinC" method="post">
 	<div>
-		<label class="inputLabel">Movie Title:</label>
+		<label class="inputLabel">Movie Title (Required):</label>
         <select name="movieC" id="movieC">
             <option value="" selected="selected">Select Movie Title</option>
             {{#if movies}}
@@ -147,7 +147,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Country:</label>
+		<label class="inputLabel">Country (Required):</label>
         <select name="countryM" id="countryM">
             <option value="" selected="selected">Select Country</option>
             {{#if countries}}
@@ -166,7 +166,7 @@
 <h2>Input A Director of a Movie</h2>
 <form id="newDofM"  action="/insertDofM" method="post">
 	<div>
-    <label class="inputLabel">Director Name:</label>
+    <label class="inputLabel">Director Name (Required):</label>
         <select name="directorM" id="actorM">
             <option value="" selected="selected">Select Director Name:</option>
             {{#if directors}}
@@ -178,7 +178,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Movie Title:</label>
+		<label class="inputLabel">Movie Title (Required):</label>
         <select name="movieD" id="movieD">
             <option value="" selected="selected">Select Movie Title</option>
             {{#if movies}}
@@ -197,7 +197,7 @@
 <h2>Input an Actor in a Movie</h2>
 <form id="newAinM" action="/insertAinM" method="post">
 	<div>
-    <label class="inputLabel">Actor Name:</label>
+    <label class="inputLabel">Actor Name (Required):</label>
         <select name="actorM" id="actorM">
             <option value="" selected="selected">Select Actor Name:</option>
             {{#if actors}}
@@ -209,7 +209,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Movie Title:</label>
+		<label class="inputLabel">Movie Title (Required):</label>
         <select name="movieA" id="movieA">
             <option value="" selected="selected">Select Movie Title</option>
             {{#if movies}}

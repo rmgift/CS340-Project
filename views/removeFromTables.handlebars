@@ -10,7 +10,7 @@
 <h2>Remove Country from Table:</h2>
 <form id="removeCty" action="/removeCountry" method="post">
     <div>
-        <label class="inputLabel">Country Name:</label>
+        <label class="inputLabel">Country Name (Required):</label>
         <select name="countryR" id="countryR">
             <option value="" selected="selected">Select Country</option>
             {{#if countries}}
@@ -29,7 +29,7 @@
 <h2>Remove Movie from Country:</h2>
 <form id="removeMfromC" action="/removeMinC" method="post">
 	<div>
-        <label class="inputLabel">Movie Title:</label>
+        <label class="inputLabel">Movie Title (Required):</label>
         <select name="movieCR" id="movieCR">
             <option value="" selected="selected">Select Movie Title</option>
             {{#if movies}}
@@ -41,7 +41,7 @@
     </div>
     <br />
 	<div>
-        <label class="inputLabel">Country Name:</label>
+        <label class="inputLabel">Country Name (Required):</label>
         <select name="countryMR" id="countryMR">
             <option value="" selected="selected">Select Country</option>
             {{#if countries}}

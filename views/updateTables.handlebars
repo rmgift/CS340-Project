@@ -10,7 +10,7 @@
 <form id="updateActor" action="/update_actor" method="post">
 
 	<div>
-    <label class="inputLabel">Actor To Update:</label>
+    <label class="inputLabel">Actor To Update (Required):</label>
         <select name="actorU" id="actorU">
             <option value="" selected="selected">Select Actor:</option>
             {{#if actors}}
@@ -23,7 +23,7 @@
 	<br />
 	<br />
 	<div>
-		<label class="inputLabel">Actor First Name:</label>
+		<label class="inputLabel">Actor First Name (Required):</label>
 		<input class="userInput" type="text" name="first_name" id="first_name">
 	</div>
 	<br />
@@ -33,7 +33,7 @@
 	</div>
 	<br />
 	<div>
-		<label class="inputLabel">Actor Age:</label>
+		<label class="inputLabel">Actor Age (Required):</label>
 		<input class="userInput" type="text" name="age" id="age">
 	</div>
 	<br />
