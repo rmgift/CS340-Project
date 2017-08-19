@@ -7,9 +7,85 @@
 
 <br />
 <h2>Welcome to our Website</h2>
-<p>The following bullets describe how to navigate around this site</p>
-<p><strong>Database Tables:</strong> this tab has a button for every table thats within the database.</p>
-<p>Simply click on the button for the table you like to display and it will navigate you to the most</p>
-<p>update-to-date version from the server.</p>
-<p><strong>Table Manipulations:</strong> this tab has a button for each page that contains the certain</p>
-<p>forms for manipulating tables in the database.</p>
+<br />
+<h3>Outline</h3>
+<p> 
+    Many famous directors and actors develop close working relationships that result in their continual collaboration on future projects. 
+    For example, when was the last time you saw a Wes Anderson movie without Bill Murray? Or how about a Quentin Tarantino film without Samuel L. Jackson? 
+    The goal of the “Directors Who Like to Work With the Same Actors” database is to store the information about these movies and the people and places involved. 
+    This allows for the rendering of interesting information about the connections between these people, their movies, and the world.
+</p>
+<h4>Overview</h4>
+<p>
+    The “Directors Who Like to Work With the Same Actors” database stores the films of directors that tend to work with the same actors. 
+    There are four entities which consist of directors, actors, movies, and countries. These entities are related in several ways. 
+    The directors and actors both have home countries. Movies have countries in which they are filmed. Finally, directors have movies which 
+    they directed, and actors have movies which they acted in. These relationships allow us to display the bios and filmography of both the 
+    directors and actors, the number of collaborations of a director and actor, and the number of actors born in, directors born in, and
+    movies filmed in each country.
+</p>
+<p><i>Entity: Movies</i></p>
+<p>
+    This entity represents movies. It is identified by its primary key “id” attribute. This is an auto incrementing int(11) that cannot be null. 
+    It has a varchar(255) “title” attribute representing the name of the movie. It cannot be null to ensure it is useful. Each movie has a varchar(255) 
+    “genre” attribute which labels the type of movie it is, such as comedy or action. In the future this could be an entity of its own to create more 
+    uniformity, but is left as an attribute as it is not pertinent in our current displays. The length of a film is stored in an int(11) “runtime” attribute. 
+    The “runtime” is stored and displayed in minutes. Finally, every movie has a date “release_date” attribute that is stored and entered as YYYY-MM-DD, 
+    but displayed as MM/DD/YYYY. This attribute also cannot be null. Sometimes movies, such as remakes, have the same name. To help the user know which 
+    version of the movie they are picking or viewing, it is required to have a release date.
+</p>
+<p><i>Entity: Directors</i></p>
+<p>
+    This entity represents movie directors. It is identified by its primary key “id” attribute. This is an auto incrementing int(11) that cannot be null.
+    It has both a varchar(255) “first_name” attribute and a varchar(255) “last_name” attribute. These attributes represent a director’s full name. 
+    In light of the fact that some people only have one name, “first_name” is set to not be null while the “last_name” attribute can be left empty. 
+    It has an int(11) “age” attribute representing the age in years. Upon further reflection, it was agreed that this was a poor design choice.
+    As “age” will need to be continuously updated, it should be changed to birthday, a date, and age could be calculated based on this field. This field cannot be null.
+    Because some people may have the same name, age (or birthdate in the future)  is required to help the user differentiate between same named directors. 
+    Finally, it has an int(11) “cid” foreign key attribute that represents the director’s home country.
+</p>
+<p><i>Entity: Actors</i></p>
+<p>
+    This entity represents movie actors. It has the exact same attributes as the Directors entity above. It is identified by its primary key “id” attribute. 
+    This is an auto incrementing int(11) that cannot be null. It has both a varchar(255) “first_name” attribute and a varchar(255) “last_name” attribute. 
+    These attributes represent an actor’s full name. In light of the fact that some people only have one name, “first_name” is set to not be null while 
+    the “last_name” attribute can be left empty. It has an int(11) “age” attribute representing the age in years. For the same reasons as in Directors, 
+    it was agreed that this was a poor design choice, and the solution to this in the future will be the same as in Directors. This field cannot be null. 
+    Because some people may have the same name, age (or birthdate in the future)  is required to help the user differentiate between same named actors.
+    Finally, it has an int(11) “cid” foreign key attribute that represents the actor’s home country.
+</p>
+<p><i>Entity: Country</i></p>
+<p>
+    This entity represents countries. It is identified by its primary key “id” attribute. This is an auto incrementing int(11) that cannot be null. 
+    It has a varchar(255) “name” attribute representing the name of a country. It cannot be null, so it can be identified by users. 
+    It has a varchar(255) “continent” attribute that represents the continent where the country is located. This also cannot be null as every country is 
+    located within a continent. It has an int(11) “population” attribute that represents the country’s population in millions. This could potentially be 
+    another entity in the future to ensure uniformity, but that complexity isn’t necessary for our purposes.
+</p>
+<p><i>Relationship: Directors and Actors have a Home Country</i></p>
+<p>
+    The Directors and Actors entities both have a many to one relationship with the Country entity. Every Actor and Director can have at most one home 
+    Country, but every Country can have many Directors and Actors that are from there. Both the Director and Actor entities have a “cid” attribute to
+    store this relationship. It is possible to have the “cid” (home country) attribute left empty in Directors and Actors. When a Country is removed, 
+    the corresponding “cid” attribute in the Director and Actor entities will be set to null; additionally, if the Country id is updated, so are the 
+    “cid” attributes.
+</p>
+<p><i>Relationship: Directors Direct Movies</i></p>
+<p>
+    The Directors entity has a many to many relationship with the Movies entity. A Director can direct many movies, but it is not required for every 
+    Director to direct a movie; however, every movie needs at least one Director so this is total participation. This relationship is represented 
+    in it’s own table, “directors_movies”, and if a Director or Movie is deleted or updated, any relationships involving those parties will also 
+    be deleted or updated respectively.
+</p>
+<p><i>Relationship: Actors Act in Movies</i></p>
+<p>
+    The Actors entity has a many to many relationship with the Movies entity. An Actor can act in many Movies, but it is not required for every Actor
+    to act in a Movie. A Movie can have 0, such as a nature documentary, or more Actors. This relationship is represented in it’s own table, “actors_movies”, 
+    and if an Actor or Movie is deleted or updated, any relationships involving those parties will also be deleted or updated respectively.
+</p>
+<p><i>Relationship: Movies are Filmed in Countries</i></p>
+<p>
+    The Movies entity has a many to many relationship with the Country entity. Movies can be made in many different Countries, and many Countries can be 
+    filming locations for many different movies. This relationship is represented in it’s own table, “movies_countries”, and if a Movie Country is deleted or 
+    updated, any relationships involving those parties will also be deleted or updated respectively.
+</p>
